@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:selectableItemBackground"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardUseCompatPadding="true"
+    tools:context=".view.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            tools:background="@android:color/holo_red_dark" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/default_margin_half"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            android:paddingTop="@dimen/default_margin_half">
+
+            <TextView
+                android:id="@+id/product_name"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/default_margin_half"
+                android:layout_marginRight="@dimen/default_margin_half"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="2"
+                tools:text="Brand new PS4 game still sealed - felt off a truck" />
+
+            <TextView
+                android:id="@+id/product_price"
+                style="@style/Base.TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/default_margin_half"
+                android:layout_marginStart="@dimen/default_margin_half"
+                tools:text="123$" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/product_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:paddingLeft="@dimen/default_margin_half"
+            android:paddingRight="@dimen/default_margin_half"
+            android:src="@color/item_product_divider_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            >
+
+            <ImageView
+                android:id="@+id/product_cart"
+                android:layout_height="@dimen/min_touch_area"
+                android:layout_width="@dimen/min_touch_area"
+                android:layout_margin="4dp"
+                android:background="?android:selectableItemBackground"
+                android:scaleType="center"
+                android:src="@drawable/shopping_cart_icon_state_selector" />
+
+            <ImageView
+                android:id="@+id/product_favorite"
+                android:layout_height="@dimen/min_touch_area"
+                android:layout_width="@dimen/min_touch_area"
+                android:layout_margin="4dp"
+                android:background="?android:selectableItemBackground"
+                android:scaleType="center"
+                android:src="@drawable/favorite_icon_state_selector" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+

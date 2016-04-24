@@ -1,0 +1,91 @@
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/coordinator_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context="com.upsa.mimo.starshipsale.view.features.detail.ProductDetailFragment">
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                tools:background="@android:color/holo_red_dark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/default_margin_half"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                android:paddingTop="@dimen/default_margin_half">
+
+                <TextView
+                    android:id="@+id/product_name"
+                    style="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/default_margin_half"
+                    android:layout_marginRight="@dimen/default_margin_half"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Brand new PS4 game still sealed - felt off a truck" />
+
+                <TextView
+                    android:id="@+id/product_price"
+                    style="@style/Base.TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_margin_half"
+                    android:layout_marginStart="@dimen/default_margin_half"
+                    android:text="123$" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/product_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:paddingLeft="@dimen/default_margin_half"
+                android:paddingRight="@dimen/default_margin_half"
+                android:src="@color/item_product_divider_color" />
+
+            <TextView
+                android:id="@+id/product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="Lorem fistrum qué dise usteer diodeno la caidita ese pedazo de jarl te va a hasé pupitaa diodeno se calle ustée mamaar ese pedazo de. Amatomaa la caidita hasta luego Lucas pupita sexuarl me cago en tus muelas. Tiene musho peligro ahorarr no te digo trigo por no llamarte Rodrigor mamaar a wan me cago en tus muelas ese hombree. Diodeno a gramenawer condemor benemeritaar. Condemor pupita a peich ese que llega tiene musho peligro papaar papaar se calle ustée ese hombree. Ese que llega hasta luego Lucas te va a hasé pupitaa condemor me cago en tus muelas te va a hasé pupitaa pupita está la cosa muy malar no te digo trigo por no llamarte Rodrigor. De la pradera al ataquerl se calle ustée amatomaa ese que llega qué dise usteer no te digo trigo por no llamarte Rodrigor quietooor por la gloria de mi madre a gramenawer. Me cago en tus muelas diodenoo diodeno fistro a gramenawer se calle ustée por la gloria de mi madre te voy a borrar el cerito de la pradera." />
+        </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_credit_card_white_24dp"
+        android:layout_margin="@dimen/default_margin"
+        />
+
+    <TextView
+        android:id="@+id/extended_fab"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@android:color/holo_red_dark"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="Purchase"/>
+</android.support.design.widget.CoordinatorLayout>
