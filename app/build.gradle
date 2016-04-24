@@ -29,4 +29,10 @@ dependencies {
     compile "com.android.support:design:$supportVersion"
     compile "com.google.android.gms:play-services:8.4.0"
 
+    // Gson for json serialization
+    compile 'com.google.code.gson:gson:2.6.1'
+    // Retrofit for networking
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.1'
+
 }
