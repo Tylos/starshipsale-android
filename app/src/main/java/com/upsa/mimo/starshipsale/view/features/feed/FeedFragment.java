@@ -2,6 +2,7 @@ package com.upsa.mimo.starshipsale.view.features.feed;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 import com.upsa.mimo.starshipsale.view.MainActivity;
 import com.upsa.mimo.starshipsale.view.ProductDetailActivity;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -95,8 +97,12 @@ public class FeedFragment extends Fragment {
                 // TODO Add to cart
             }
         });
-        mAdapter.setProducts(getProducts());
-        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fetchProducts();
     }
 
     @Override
@@ -106,20 +112,29 @@ public class FeedFragment extends Fragment {
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
-    public List<Product> getProducts() {
-        final ArrayList<Product> products = new ArrayList<>();
+    public void fetchProducts() {
+        new FeedAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
 
-        for (int i = 0; i < 20; i++) {
-            products.add(Product.newBuilder()
-                    .withId((long) i)
-                    .withName("bullshit")
-                    .withDescription("Super duper bullshit description")
-                    .withImage("")
-                    .withIsFavorite(true)
-                    .withPrice(23.80)
-                    .withIsFeatured(i % 5 == 0)
-                    .build());
+    private class FeedAsyncTask extends AsyncTask<Void, Void, List<Product>> {
+
+        @Override
+        protected List<Product> doInBackground(Void... params) {
+            try {
+                return new ApiProductRepository("http://startshipsale.herokuapp.com/api/").getAll();
+            } catch (IOException e) {
+                return null;
+            }
         }
-        return products;
+
+        @Override
+        protected void onPostExecute(List<Product> products) {
+            if (products != null) {
+                mAdapter.setProducts(products);
+                mAdapter.notifyDataSetChanged();
+            } else {
+                // TODO empty view
+            }
+        }
     }
 }
