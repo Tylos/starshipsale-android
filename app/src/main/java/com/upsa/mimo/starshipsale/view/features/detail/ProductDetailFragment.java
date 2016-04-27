@@ -3,29 +3,57 @@ package com.upsa.mimo.starshipsale.view.features.detail;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
+import com.upsa.mimo.starshipsale.domain.entities.Product;
+
+import java.io.IOException;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class ProductDetailFragment extends Fragment {
 
+    private static final String ARGUMENTS_PRODUCT_ID = "arguments.product_id";
+
     private CoordinatorLayout mCoordinatorLayout;
     private FloatingActionButton mFab;
     private View mExtendedFab;
+    private TextView mName;
+    private ImageView mImage;
+    private TextView mPrice;
+    private TextView mDescription;
+    private TextView mModel;
+    private TextView mManufacturer;
+    private TextView mClass;
+    private TextView mPassengers;
+    private TextView mCrew;
+    private TextView mCargo;
+    private TextView mHyperdriveRating;
 
     public ProductDetailFragment() {
+    }
+
+    public static android.app.Fragment newInstance(long productId) {
+        Fragment fragment = new ProductDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong(ARGUMENTS_PRODUCT_ID, productId);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -41,6 +69,19 @@ public class ProductDetailFragment extends Fragment {
         mCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
         mFab = (FloatingActionButton) view.findViewById(R.id.fab);
         mExtendedFab = view.findViewById(R.id.extended_fab);
+
+        mName = (TextView) view.findViewById(R.id.product_name);
+        mImage = (ImageView) view.findViewById(R.id.product_image);
+        mPrice = (TextView) view.findViewById(R.id.product_price);
+        mDescription = (TextView) view.findViewById(R.id.product_description);
+        mModel = (TextView) view.findViewById(R.id.product_model);
+        mManufacturer = (TextView) view.findViewById(R.id.product_manufacturer);
+        mClass = (TextView) view.findViewById(R.id.product_class);
+        mPassengers = (TextView) view.findViewById(R.id.product_passengers);
+        mCrew = (TextView) view.findViewById(R.id.product_crew);
+        mCargo = (TextView) view.findViewById(R.id.product_cargo);
+        mHyperdriveRating = (TextView) view.findViewById(R.id.product_hyperdrive_rating);
+
 
         //testOpenReveal();
         //testCloseReveal();
@@ -58,10 +99,10 @@ public class ProductDetailFragment extends Fragment {
                         @Override
                         public void run() {
 
-                                            final int[] fabXY = new int[2];
-                mFab.getLocationOnScreen(fabXY);
+                            final int[] fabXY = new int[2];
+                            mFab.getLocationOnScreen(fabXY);
 
-                final int[] ctaXY = new int[2];
+                            final int[] ctaXY = new int[2];
 
                             final Point extendedFabCenter = center(mExtendedFab);
                             final Point fabCenter = center(mFab);
@@ -188,6 +229,15 @@ public class ProductDetailFragment extends Fragment {
         });*/
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        new DetailAsyncTask().executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR,
+                getArguments().getLong(ARGUMENTS_PRODUCT_ID));
+    }
+
     private Point center(View view) {
         return new Point((int) view.getX() + (view.getWidth() / 2), (int) view.getY() + (view.getHeight() / 2));
     }
@@ -264,5 +314,37 @@ public class ProductDetailFragment extends Fragment {
                 extendedFab.getWidth());
     }
 
+    private class DetailAsyncTask extends AsyncTask<Long, Void, Product> {
+
+        @Override
+        protected Product doInBackground(Long... params) {
+            try {
+                return new ApiProductRepository("http://startshipsale.herokuapp.com/api/").getById(params[0]);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Product product) {
+            if (product != null) {
+                renderProduct(product);
+            } else {
+                // TODO empty view
+            }
+        }
+    }
+
+    private void renderProduct(Product product) {
+        mName.setText(product.getName());
+        mPrice.setText(product.getPrice());
+        mModel.setText(String.format("Model\t %s", product.getModel()));
+        mManufacturer.setText(String.format("Manufacturer\t %s", product.getManufacturer()));
+        mClass.setText(String.format("Starship Class\t %s", product.getStarshipClass()));
+        mPassengers.setText(String.format("Passengers\t %s", product.getPassengers()));
+        mCrew.setText(String.format("Crew\t %s", product.getCrew()));
+        mCargo.setText(String.format("Cargo capacity\t %s", product.getCargoCapacity()));
+        mHyperdriveRating.setText(String.format("Hyperdrive rating\t %s", product.getHyperDriveRating()));
+    }
 
 }

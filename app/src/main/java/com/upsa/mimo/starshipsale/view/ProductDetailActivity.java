@@ -1,5 +1,6 @@
 package com.upsa.mimo.starshipsale.view;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
+import com.upsa.mimo.starshipsale.view.features.detail.ProductDetailFragment;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -24,6 +26,18 @@ public class ProductDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final long productId = getIntent().getExtras().getLong(EXTRAS_PRODUCT_ID);
+        Fragment fragment = ProductDetailFragment.newInstance(productId);
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment, "fragment_tag.product_detail")
+                .commit();
     }
 
     @Override
