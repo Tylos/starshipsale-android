@@ -1,4 +1,4 @@
-package com.upsa.mimo.starshipsale.view;
+package com.upsa.mimo.starshipsale.view.features.detail;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
-import com.upsa.mimo.starshipsale.view.features.detail.ProductDetailFragment;
 
 public class ProductDetailActivity extends AppCompatActivity {
 

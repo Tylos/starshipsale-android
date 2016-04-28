@@ -15,7 +15,7 @@ import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 import com.upsa.mimo.starshipsale.view.MainActivity;
-import com.upsa.mimo.starshipsale.view.ProductDetailActivity;
+import com.upsa.mimo.starshipsale.view.features.detail.ProductDetailActivity;
 
 import java.io.IOException;
 import java.util.List;
