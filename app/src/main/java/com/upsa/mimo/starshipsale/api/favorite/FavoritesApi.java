@@ -16,8 +16,8 @@ public interface FavoritesApi {
     Call<List<Product>> list();
 
     @POST("favorites/{productId}")
-    Call<Product> favorite(@Path("{productId}")Long productId);
+    Call<Product> favorite(@Path("productId")Long productId);
 
     @DELETE("favorites/{productId}")
-    Call<Product> unfavorite(@Path("{productId}")Long productId);
+    Call<Product> unfavorite(@Path("productId")Long productId);
 }

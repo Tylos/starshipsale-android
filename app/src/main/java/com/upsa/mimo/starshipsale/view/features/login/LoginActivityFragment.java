@@ -69,6 +69,7 @@ public class LoginActivityFragment extends Fragment {
         protected void onPostExecute(Session session) {
             super.onPostExecute(session);
             MainActivity.launch(getActivity());
+            getActivity().finish();
         }
     }
 }

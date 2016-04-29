@@ -16,8 +16,8 @@ public interface CartApi {
     Call<List<Product>> list();
 
     @POST("cart/{productId}")
-    Call<Product> addToCart(@Path("{productId}")Long productId);
+    Call<Product> addToCart(@Path("productId")Long productId);
 
     @DELETE("cart/{productId}")
-    Call<Product> removeFromCart(@Path("{productId}")Long productId);
+    Call<Product> removeFromCart(@Path("productId")Long productId);
 }

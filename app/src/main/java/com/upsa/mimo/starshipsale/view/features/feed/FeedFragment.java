@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.api.cart.ApiCartRepository;
 import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 import com.upsa.mimo.starshipsale.view.MainActivity;
@@ -89,12 +90,12 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onFavoriteClick(Product product) {
-                // TODO Mark as favorite
+                // TODO Mark as addToCart
             }
 
             @Override
             public void onAddToCartClick(Product product) {
-                // TODO Add to cart
+                new CartAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, product);
             }
         });
     }
@@ -134,6 +135,34 @@ public class FeedFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
             } else {
                 // TODO empty view
+            }
+        }
+    }
+
+    private class CartAsyncTask extends AsyncTask<Product, Void, Product> {
+
+        @Override
+        protected Product doInBackground(Product... params) {
+            final ApiCartRepository apiCartRepository = new ApiCartRepository("http://startshipsale.herokuapp.com/api/");
+            Product product = params[0];
+            try {
+                if (!product.isFavorite()) {
+                    return apiCartRepository.addToCart(product.getId());
+                } else {
+                    return apiCartRepository.removeFromCart(product.getId());
+                }
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Product product) {
+            super.onPostExecute(product);
+            if (product != null) {
+                mAdapter.update(product);
+            } else {
+                //TODO ERROR
             }
         }
     }

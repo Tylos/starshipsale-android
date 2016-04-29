@@ -57,6 +57,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         return products.size();
     }
 
+    public void update(Product product) {
+        final int index = products.indexOf(product);
+        products.set(index, product);
+        notifyItemChanged(index);
+    }
+
     @Override
     public int getItemViewType(int position) {
         final Product product = products.get(position);

@@ -224,5 +224,21 @@ public class Product {
         public Product build() {
             return new Product(this);
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Builder)) return false;
+
+            Builder builder = (Builder) o;
+
+            return id.equals(builder.id);
+
+        }
+
+        @Override
+        public int hashCode() {
+            return id.hashCode();
+        }
     }
 }

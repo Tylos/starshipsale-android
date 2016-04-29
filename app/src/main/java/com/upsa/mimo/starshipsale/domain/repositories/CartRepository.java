@@ -8,7 +8,7 @@ import java.util.List;
 public interface CartRepository {
     List<Product> getAll() throws IOException;
 
-    Product favorite(Long id) throws IOException;
+    Product addToCart(Long id) throws IOException;
 
-    Product unfavorite(Long id) throws IOException;
+    Product removeFromCart(Long id) throws IOException;
 }
