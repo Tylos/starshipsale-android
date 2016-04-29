@@ -21,7 +21,7 @@ public class SessionRepository {
         if (response.isSuccessful()) {
             return response.body();
         } else {
-            throw new IOException(String.valueOf(response.errorBody()));
+            throw new IOException(String.valueOf(response.code()));
         }
     }
 }

@@ -17,4 +17,6 @@
     <string name="title_activity_product_detail">ProductDetailActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="section_feed">Feed</string>
+    <string name="section_cart">Shopping Cart</string>
 </resources>

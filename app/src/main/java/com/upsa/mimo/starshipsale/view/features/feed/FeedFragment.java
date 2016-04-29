@@ -1,6 +1,5 @@
 package com.upsa.mimo.starshipsale.view.features.feed;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.cart.ApiCartRepository;
 import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
-import com.upsa.mimo.starshipsale.view.MainActivity;
 import com.upsa.mimo.starshipsale.view.features.detail.ProductDetailActivity;
 
 import java.io.IOException;
@@ -25,11 +23,6 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class FeedFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
-    private static final String ARG_SECTION_NUMBER = "section_number";
     public static final int SPAN_COUNT = 2;
     private RecyclerView mRecyclerView;
     private ProductAdapter mAdapter;
@@ -38,10 +31,9 @@ public class FeedFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static FeedFragment newInstance(int sectionNumber) {
+    public static FeedFragment newInstance() {
         FeedFragment fragment = new FeedFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -104,13 +96,6 @@ public class FeedFragment extends Fragment {
     public void onStart() {
         super.onStart();
         fetchProducts();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
     public void fetchProducts() {
