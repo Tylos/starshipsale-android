@@ -9,7 +9,7 @@ public interface FavoritesRepository {
 
     List<Product> getAll() throws IOException;
 
-    Product favorite(Long id) throws IOException;
+    Product favorite(String id) throws IOException;
 
-    Product unfavorite(Long id) throws IOException;
+    Product unfavorite(String id) throws IOException;
 }

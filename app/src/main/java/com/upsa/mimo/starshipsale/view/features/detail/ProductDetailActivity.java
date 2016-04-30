@@ -31,13 +31,15 @@ public class ProductDetailActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        long productId = getDeepLinkingProductId(getIntent());
-        if (productId == -1
+        String productId = getDeepLinkingProductId(getIntent());
+        if (productId == null
                 && getIntent() != null
                 && getIntent().getExtras() != null
                 && getIntent().getExtras().containsKey(EXTRAS_PRODUCT_ID)) {
-            productId = getIntent().getExtras().getLong(EXTRAS_PRODUCT_ID);
-        } else {
+            productId = getIntent().getExtras().getString(EXTRAS_PRODUCT_ID);
+        }
+
+        if(productId == null) {
             finish();
         }
 
@@ -49,17 +51,12 @@ public class ProductDetailActivity extends AppCompatActivity {
                 .commit();
     }
 
-    protected Long getDeepLinkingProductId(Intent intent) {
+    protected String getDeepLinkingProductId(Intent intent) {
         String action = intent.getAction();
         String dataString = intent.getDataString();
-        Long productId = -1L;
+        String productId = null;
         if (Intent.ACTION_VIEW.equals(action) && dataString != null) {
-            String productIdRaw = dataString.substring(dataString.lastIndexOf("/") + 1);
-            try {
-                productId = Long.valueOf(productIdRaw);
-            } catch (Exception e) {
-                productId = -1L;
-            }
+             productId = dataString.substring(dataString.lastIndexOf("/") + 1);
         }
         return productId;
     }

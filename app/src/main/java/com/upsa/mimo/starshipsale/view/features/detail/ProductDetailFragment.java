@@ -50,10 +50,10 @@ public class ProductDetailFragment extends Fragment {
     public ProductDetailFragment() {
     }
 
-    public static android.app.Fragment newInstance(long productId) {
+    public static android.app.Fragment newInstance(String productId) {
         Fragment fragment = new ProductDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(ARGUMENTS_PRODUCT_ID, productId);
+        bundle.putString(ARGUMENTS_PRODUCT_ID, productId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -237,7 +237,7 @@ public class ProductDetailFragment extends Fragment {
         super.onStart();
         new DetailAsyncTask().executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR,
-                getArguments().getLong(ARGUMENTS_PRODUCT_ID));
+                getArguments().getString(ARGUMENTS_PRODUCT_ID));
     }
 
     private Point center(View view) {
@@ -316,10 +316,10 @@ public class ProductDetailFragment extends Fragment {
                 extendedFab.getWidth());
     }
 
-    private class DetailAsyncTask extends AsyncTask<Long, Void, Product> {
+    private class DetailAsyncTask extends AsyncTask<String, Void, Product> {
 
         @Override
-        protected Product doInBackground(Long... params) {
+        protected Product doInBackground(String... params) {
             try {
                 return new ApiProductRepository(BuildConfig.SERVER_REST_URL).getById(params[0]);
             } catch (IOException e) {

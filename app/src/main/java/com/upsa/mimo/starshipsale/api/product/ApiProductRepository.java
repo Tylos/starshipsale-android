@@ -28,7 +28,7 @@ public class ApiProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product getById(Long id) throws IOException {
+    public Product getById(String id) throws IOException {
         final Response<Product> response = productApi.getProduct(id).execute();
         if (response.isSuccessful()) {
             return response.body();

@@ -10,5 +10,5 @@ public interface ProductRepository {
 
     List<Product> getAll() throws IOException;
 
-    Product getById(Long id) throws IOException;
+    Product getById(String id) throws IOException;
 }

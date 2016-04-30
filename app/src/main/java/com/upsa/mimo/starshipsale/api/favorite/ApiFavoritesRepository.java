@@ -27,7 +27,7 @@ public class ApiFavoritesRepository implements com.upsa.mimo.starshipsale.domain
     }
 
     @Override
-    public Product favorite(Long id) throws IOException {
+    public Product favorite(String id) throws IOException {
         final Response<Product> response = favoritesApi.favorite(id).execute();
         if (response.isSuccessful()) {
             return response.body();
@@ -37,7 +37,7 @@ public class ApiFavoritesRepository implements com.upsa.mimo.starshipsale.domain
     }
 
     @Override
-    public Product unfavorite(Long id) throws IOException {
+    public Product unfavorite(String id) throws IOException {
         final Response<Product> response = favoritesApi.unfavorite(id).execute();
         if (response.isSuccessful()) {
             return response.body();
