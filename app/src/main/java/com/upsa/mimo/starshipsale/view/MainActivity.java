@@ -1,7 +1,9 @@
 package com.upsa.mimo.starshipsale.view;
 
-import android.app.ActionBar;
-import android.app.Activity;
+import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
+import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
+
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +11,12 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
-import com.upsa.mimo.starshipsale.R;
-import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
-import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
-
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private CharSequence mTitle;
     private DrawerLayout drawerLayout;
@@ -32,9 +31,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setActionBar(toolbar);
-        final ActionBar actionBar = getActionBar();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(new DrawerArrowDrawable(this));
