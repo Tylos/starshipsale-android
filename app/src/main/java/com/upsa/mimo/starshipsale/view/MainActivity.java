@@ -1,9 +1,5 @@
 package com.upsa.mimo.starshipsale.view;
 
-import com.upsa.mimo.starshipsale.R;
-import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
-import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
-
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
+import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
 
 public class MainActivity extends AppCompatActivity {
 
