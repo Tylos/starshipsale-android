@@ -85,7 +85,7 @@ public class LoginActivityFragment extends Fragment {
                 MainActivity.launch(getActivity());
                 getActivity().finish();
             } else {
-                Snackbar.make(view, "Oops! Something went wrong", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, R.string.generic_error, Snackbar.LENGTH_SHORT).show();
             }
             viewSwitcher.showPrevious();
         }

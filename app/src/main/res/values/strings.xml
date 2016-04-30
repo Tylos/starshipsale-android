@@ -22,4 +22,7 @@
     <string name="login_email_hint">email</string>
     <string name="login_password_hint">password</string>
     <string name="login_cta_text">login</string>
+    <string name="generic_error">Oops! Something went wrong</string>
+    <string name="generic_retry">retry</string>
+    <string name="feed_empty_results">This is odd.. found nothing :(</string>
 </resources>
