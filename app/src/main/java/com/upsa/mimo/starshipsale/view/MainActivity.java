@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toolbar;
 
 import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
 import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
 
 public class MainActivity extends Activity {
@@ -48,11 +49,20 @@ public class MainActivity extends Activity {
                 drawerLayout.closeDrawers();
 
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, FeedFragment.newInstance())
-                        .commit();
-
-                return true;
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_feed:
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, FeedFragment.newInstance())
+                                .commit();
+                        return true;
+                    case R.id.drawer_cart:
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, CartFragment.newInstance())
+                                .commit();
+                        return true;
+                    default:
+                        return false;
+                }
             }
         });
         view.getMenu().performIdentifierAction(R.id.drawer_feed, 0);

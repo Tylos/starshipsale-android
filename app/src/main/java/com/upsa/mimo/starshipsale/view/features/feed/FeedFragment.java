@@ -25,7 +25,7 @@ import java.util.List;
 public class FeedFragment extends Fragment {
     public static final int SPAN_COUNT = 2;
     private RecyclerView mRecyclerView;
-    private ProductAdapter mAdapter;
+    private FeedAdapter mAdapter;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -61,7 +61,7 @@ public class FeedFragment extends Fragment {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (mAdapter.getItemViewType(position) == ProductAdapter.TYPE_FEATURED) {
+                if (mAdapter.getItemViewType(position) == FeedAdapter.TYPE_FEATURED) {
                     return 2;
                 } else {
                     return 1;
@@ -71,10 +71,10 @@ public class FeedFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new ProductAdapter();
+        mAdapter = new FeedAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setProductClickListener(new ProductAdapter.OnProductClickListener() {
+        mAdapter.setProductClickListener(new FeedAdapter.OnProductClickListener() {
             @Override
             public void onProductClick(Product product) {
                 ProductDetailActivity.launch(getActivity(), product);

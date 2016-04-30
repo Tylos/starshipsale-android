@@ -8,9 +8,9 @@ import android.widget.TextView;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 
-class ProductViewHolder extends RecyclerView.ViewHolder {
+class FeedItemViewHolder extends RecyclerView.ViewHolder {
 
-    private ProductAdapter.OnProductClickListener mProductClickListener;
+    private FeedAdapter.OnProductClickListener mProductClickListener;
     private TextView mName;
     private ImageView mImage;
     private TextView mPrice;
@@ -18,7 +18,7 @@ class ProductViewHolder extends RecyclerView.ViewHolder {
     private ImageView mAddedToCart;
     private Product mBoundProduct;
 
-    public ProductViewHolder(View itemView, ProductAdapter.OnProductClickListener productClickListener) {
+    public FeedItemViewHolder(View itemView, FeedAdapter.OnProductClickListener productClickListener) {
         super(itemView);
         mProductClickListener = productClickListener;
         findViews(itemView);

@@ -8,6 +8,16 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_product"
+        tools:listitem="@layout/item_cart_product"
         />
+
+    <TextView
+        android:id="@+id/extended_fab"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@android:color/holo_red_dark"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="Purchase"/>
+
 </FrameLayout>

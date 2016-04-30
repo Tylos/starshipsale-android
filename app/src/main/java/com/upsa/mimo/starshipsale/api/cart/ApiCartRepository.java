@@ -22,7 +22,7 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
         if (response.isSuccessful()) {
             return response.body();
         } else {
-            throw new IOException(String.valueOf(response.errorBody()));
+            throw new IOException(String.valueOf(response.code()));
         }
     }
 
@@ -32,7 +32,7 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
         if (response.isSuccessful()) {
             return response.body();
         } else {
-            throw new IOException(String.valueOf(response.errorBody()));
+            throw new IOException(String.valueOf(response.code()));
         }
     }
 
@@ -42,7 +42,7 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
         if (response.isSuccessful()) {
             return response.body();
         } else {
-            throw new IOException(String.valueOf(response.errorBody()));
+            throw new IOException(String.valueOf(response.code()));
         }
     }
 }

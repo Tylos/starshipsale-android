@@ -11,7 +11,7 @@ import com.upsa.mimo.starshipsale.domain.entities.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
+public class FeedAdapter extends RecyclerView.Adapter<FeedItemViewHolder> {
 
     public static final int TYPE_FEATURED = 1;
     private static final int TYPE_DEFAULT = 2;
@@ -35,20 +35,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     }
 
     @Override
-    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+    public FeedItemViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         View layoutView = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.item_product, parent, false);
-        return new ProductViewHolder(layoutView, productClickListener);
+        return new FeedItemViewHolder(layoutView, productClickListener);
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder productViewHolder, int i) {
+    public void onBindViewHolder(FeedItemViewHolder productViewHolder, int i) {
         productViewHolder.bind(products.get(i));
     }
 
     @Override
-    public void onViewRecycled(ProductViewHolder holder) {
+    public void onViewRecycled(FeedItemViewHolder holder) {
         super.onViewRecycled(holder);
     }
 
