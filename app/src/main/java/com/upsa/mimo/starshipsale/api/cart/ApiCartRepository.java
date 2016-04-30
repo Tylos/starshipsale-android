@@ -27,7 +27,7 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
     }
 
     @Override
-    public Product addToCart(Long id) throws IOException {
+    public Product addToCart(String id) throws IOException {
         final Response<Product> response = cartApi.addToCart(id).execute();
         if (response.isSuccessful()) {
             return response.body();
@@ -37,7 +37,7 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
     }
 
     @Override
-    public Product removeFromCart(Long id) throws IOException {
+    public Product removeFromCart(String id) throws IOException {
         final Response<Product> response = cartApi.removeFromCart(id).execute();
         if (response.isSuccessful()) {
             return response.body();

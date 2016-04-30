@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Product {
 
 
-    @SerializedName("id") private final Long id;
+    @SerializedName("id") private final String id;
     @SerializedName("name") private final String name;
     @SerializedName("model") private final String model;
     @SerializedName("manufacturer") private final String manufacturer;
@@ -43,7 +43,7 @@ public class Product {
         return isAddedToCart;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -124,7 +124,7 @@ public class Product {
 
 
     public static final class Builder {
-        private Long id;
+        private String id;
         private String name;
         private String model;
         private String manufacturer;
@@ -144,7 +144,7 @@ public class Product {
         private Builder() {
         }
 
-        public Builder withId(Long val) {
+        public Builder withId(String val) {
             id = val;
             return this;
         }
