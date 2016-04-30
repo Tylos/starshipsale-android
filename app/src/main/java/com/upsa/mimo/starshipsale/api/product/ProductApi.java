@@ -11,10 +11,10 @@ import retrofit2.http.Path;
 
 public interface ProductApi {
 
-    @GET("products")
+    @GET("/api/products")
     Call<List<Product>> getAll();
 
-    @GET("products/{productId}")
+    @GET("/api/products/{productId}")
     Call<Product> getProduct(@Path("productId") Long productId);
 
 }

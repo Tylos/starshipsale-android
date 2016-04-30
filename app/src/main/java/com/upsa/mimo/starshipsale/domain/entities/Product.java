@@ -75,6 +75,9 @@ public class Product {
         return hyperDriveRating;
     }
 
+    public String getImage() {
+        return image;
+    }
     private Product(Builder builder) {
         id = builder.id;
         name = builder.name;

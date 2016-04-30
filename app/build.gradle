@@ -12,7 +12,13 @@ android {
         versionName "1.0"
     }
     buildTypes {
+
+        debug {
+            buildConfigField "String", "SERVER_REST_URL", "\"http://192.168.0.101:9000\""
+        }
+
         release {
+            buildConfigField "String", "SERVER_REST_URL", "\"http://startshipsale.herokuapp.com\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -34,4 +40,8 @@ dependencies {
     // Retrofit for networking
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+
+    // Picasso for image downloading
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
 }

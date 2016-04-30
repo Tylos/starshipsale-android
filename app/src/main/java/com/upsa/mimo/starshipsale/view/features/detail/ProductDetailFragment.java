@@ -1,5 +1,11 @@
 package com.upsa.mimo.starshipsale.view.features.detail;
 
+import com.squareup.picasso.Picasso;
+import com.upsa.mimo.starshipsale.BuildConfig;
+import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
+import com.upsa.mimo.starshipsale.domain.entities.Product;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -16,10 +22,6 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.upsa.mimo.starshipsale.R;
-import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
-import com.upsa.mimo.starshipsale.domain.entities.Product;
 
 import java.io.IOException;
 
@@ -319,7 +321,7 @@ public class ProductDetailFragment extends Fragment {
         @Override
         protected Product doInBackground(Long... params) {
             try {
-                return new ApiProductRepository("http://startshipsale.herokuapp.com/api/").getById(params[0]);
+                return new ApiProductRepository(BuildConfig.SERVER_REST_URL).getById(params[0]);
             } catch (IOException e) {
                 return null;
             }
@@ -345,6 +347,11 @@ public class ProductDetailFragment extends Fragment {
         mCrew.setText(String.format("Crew\t %s", product.getCrew()));
         mCargo.setText(String.format("Cargo capacity\t %s", product.getCargoCapacity()));
         mHyperdriveRating.setText(String.format("Hyperdrive rating\t %s", product.getHyperDriveRating()));
+
+        Picasso.with(getActivity()).
+                load(product.getImage())
+                .fit()
+                .into(mImage);
     }
 
 }

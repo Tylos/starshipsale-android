@@ -1,15 +1,18 @@
 package com.upsa.mimo.starshipsale.view.features.feed;
 
+import com.squareup.picasso.Picasso;
+import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.domain.entities.Product;
+
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.upsa.mimo.starshipsale.R;
-import com.upsa.mimo.starshipsale.domain.entities.Product;
-
 class FeedItemViewHolder extends RecyclerView.ViewHolder {
 
+    private Context itemViewContext;
     private FeedAdapter.OnProductClickListener mProductClickListener;
     private TextView mName;
     private ImageView mImage;
@@ -20,8 +23,9 @@ class FeedItemViewHolder extends RecyclerView.ViewHolder {
 
     public FeedItemViewHolder(View itemView, FeedAdapter.OnProductClickListener productClickListener) {
         super(itemView);
-        mProductClickListener = productClickListener;
+        itemViewContext = itemView.getContext();
         findViews(itemView);
+        mProductClickListener = productClickListener;
         attachListeners(itemView);
     }
 
@@ -65,5 +69,9 @@ class FeedItemViewHolder extends RecyclerView.ViewHolder {
         mPrice.setText(product.getPrice() + " €");
         mFavorite.setActivated(product.isFavorite());
         mAddedToCart.setActivated(product.isAddedToCart());
+        Picasso.with(itemViewContext).
+                load(product.getImage())
+                .fit()
+                .into(mImage);
     }
 }
