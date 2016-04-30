@@ -2,12 +2,14 @@ package com.upsa.mimo.starshipsale.view.features.login;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ViewSwitcher;
 
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
@@ -21,8 +23,10 @@ import java.io.IOException;
  */
 public class LoginActivityFragment extends Fragment {
 
-    private EditText mPasswordInput;
-    private EditText mEmailInput;
+    private EditText passwordInput;
+    private EditText emailInput;
+    private View view;
+    private ViewSwitcher viewSwitcher;
 
     public LoginActivityFragment() {
     }
@@ -35,22 +39,31 @@ public class LoginActivityFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        this.view = view;
         super.onViewCreated(view, savedInstanceState);
-        mEmailInput = (EditText) view.findViewById(R.id.email_input);
-        mPasswordInput = (EditText) view.findViewById(R.id.password_input);
+        emailInput = (EditText) view.findViewById(R.id.email_input);
+        passwordInput = (EditText) view.findViewById(R.id.password_input);
+        viewSwitcher = (ViewSwitcher) view.findViewById(R.id.cta_view_switcher);
+
         view.findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new LoginAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
                         new Pair<>(
-                                mEmailInput.getText().toString(),
-                                mPasswordInput.getText().toString()
+                                emailInput.getText().toString(),
+                                passwordInput.getText().toString()
                         ));
             }
         });
     }
 
     private class LoginAsyncTask extends AsyncTask<Pair<String, String>, Void, Session> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            viewSwitcher.showNext();
+        }
 
         @Override
         protected Session doInBackground(Pair<String, String>... params) {
@@ -68,8 +81,13 @@ public class LoginActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(Session session) {
             super.onPostExecute(session);
-            MainActivity.launch(getActivity());
-            getActivity().finish();
+            if (session != null) {
+                MainActivity.launch(getActivity());
+                getActivity().finish();
+            } else {
+                Snackbar.make(view, "Oops! Something went wrong", Snackbar.LENGTH_SHORT).show();
+            }
+            viewSwitcher.showPrevious();
         }
     }
 }
