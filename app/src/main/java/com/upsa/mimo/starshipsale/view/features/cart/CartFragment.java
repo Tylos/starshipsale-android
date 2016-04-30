@@ -3,16 +3,20 @@ package com.upsa.mimo.starshipsale.view.features.cart;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.cart.ApiCartRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
+import com.upsa.mimo.starshipsale.view.MainActivity;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,9 +25,12 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class CartFragment extends Fragment {
-    private RecyclerView mRecyclerView;
-    private CartAdapter mAdapter;
-    private TextView mCTA;
+    private RecyclerView recyclerView;
+    private CartAdapter adapter;
+    private TextView cta;
+    private View emptyView;
+    private ProgressBar progressBar;
+    private CoordinatorLayout coordinatorLayout;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -49,23 +56,28 @@ public class CartFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mCTA = (TextView) view.findViewById(R.id.extended_fab);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        cta = (TextView) view.findViewById(R.id.extended_fab);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getActivity(), LinearLayoutManager.VERTICAL, false);
 
-        mRecyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new CartAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        adapter = new CartAdapter();
+        recyclerView.setAdapter(adapter);
 
-        mCTA.setOnClickListener(new View.OnClickListener() {
+        progressBar = (ProgressBar) view.findViewById(R.id.pb_loading);
+        emptyView = view.findViewById(R.id.empty_view);
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
+
+        cta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Purchase fragment plx
             }
         });
+        cta.setVisibility(View.GONE);
     }
 
     @Override
@@ -81,10 +93,18 @@ public class CartFragment extends Fragment {
     private class CartAsyncTask extends AsyncTask<Void, Void, List<Product>> {
 
         @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
+        @Override
         protected List<Product> doInBackground(Void... params) {
             try {
                 return new ApiCartRepository("http://startshipsale.herokuapp.com/api/").getAll();
             } catch (IOException e) {
+                e.printStackTrace();
                 return null;
             }
         }
@@ -92,25 +112,63 @@ public class CartFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Product> products) {
             if (products != null) {
-                mAdapter.setProducts(products);
-                mAdapter.notifyDataSetChanged();
-                long total = 0;
-                for (Product product : products) {
-                    try {
-                        total += Long.valueOf(product.getPrice());
-                    } catch (NumberFormatException e) {
-                        // Skip to next
-                    }
+                if (!products.isEmpty()) {
+                    progressBar.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    adapter.setProducts(products);
+                    adapter.notifyDataSetChanged();
+                    long total = 0;
+                    for (Product product : products) {
+                        try {
+                            total += Long.valueOf(product.getPrice());
+                        } catch (NumberFormatException e) {
+                            // Skip to next
+                        }
 
-                    if (total > 0) {
-                        mCTA.setText(String.format("Purchase - %d", total));
-                        mCTA.setVisibility(View.VISIBLE);
-                    } else {
-                        mCTA.setVisibility(View.GONE);
+                        if (total > 0) {
+                            cta.setText(String.format("Purchase - %d", total));
+                            cta.setVisibility(View.VISIBLE);
+                            cta.setVisibility(View.VISIBLE);
+                            cta.setTranslationY(cta.getHeight());
+                            cta.animate()
+                                    .translationY(0)
+                                    .setDuration(100)
+                                    .start();
+
+                        } else {
+                            cta.setVisibility(View.GONE);
+                        }
                     }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    final TextView emptyViewTitle = (TextView) emptyView.findViewById(R.id.empty_view_title);
+                    emptyViewTitle.setText(R.string.cart_empty_title);
+                    final Button emptyViewCTA = (Button) emptyView.findViewById(R.id.empty_view_cta);
+                    emptyViewCTA.setText(R.string.cart_empty_cta);
+                    emptyViewCTA.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((MainActivity) getActivity()).openFeed();
+                        }
+                    });
                 }
             } else {
-                // TODO empty view
+                progressBar.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                final TextView emptyViewTitle = (TextView) emptyView.findViewById(R.id.empty_view_title);
+                emptyViewTitle.setText(R.string.generic_error);
+                final Button emptyViewCTA = (Button) emptyView.findViewById(R.id.empty_view_cta);
+                emptyViewCTA.setText(R.string.generic_retry);
+                emptyViewCTA.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fetchCart();
+                    }
+                });
             }
         }
     }

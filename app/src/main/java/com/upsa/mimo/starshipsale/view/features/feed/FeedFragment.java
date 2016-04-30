@@ -3,12 +3,17 @@ package com.upsa.mimo.starshipsale.view.features.feed;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.cart.ApiCartRepository;
@@ -24,8 +29,11 @@ import java.util.List;
  */
 public class FeedFragment extends Fragment {
     public static final int SPAN_COUNT = 2;
-    private RecyclerView mRecyclerView;
-    private FeedAdapter mAdapter;
+    private RecyclerView recyclerView;
+    private FeedAdapter adapter;
+    private View emptyView;
+    private ProgressBar progressBar;
+    private CoordinatorLayout coordinatorLayout;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -51,8 +59,10 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        progressBar = (ProgressBar) view.findViewById(R.id.pb_loading);
+        emptyView = view.findViewById(R.id.empty_view);
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
         final GridLayoutManager layoutManager = new GridLayoutManager(
                 getActivity(),
                 SPAN_COUNT,
@@ -61,7 +71,7 @@ public class FeedFragment extends Fragment {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (mAdapter.getItemViewType(position) == FeedAdapter.TYPE_FEATURED) {
+                if (adapter.getItemViewType(position) == FeedAdapter.TYPE_FEATURED) {
                     return 2;
                 } else {
                     return 1;
@@ -69,12 +79,12 @@ public class FeedFragment extends Fragment {
             }
         });
 
-        mRecyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new FeedAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        adapter = new FeedAdapter();
+        recyclerView.setAdapter(adapter);
 
-        mAdapter.setProductClickListener(new FeedAdapter.OnProductClickListener() {
+        adapter.setProductClickListener(new FeedAdapter.OnProductClickListener() {
             @Override
             public void onProductClick(Product product) {
                 ProductDetailActivity.launch(getActivity(), product);
@@ -105,6 +115,13 @@ public class FeedFragment extends Fragment {
     private class FeedAsyncTask extends AsyncTask<Void, Void, List<Product>> {
 
         @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
+        @Override
         protected List<Product> doInBackground(Void... params) {
             try {
                 return new ApiProductRepository("http://startshipsale.herokuapp.com/api/").getAll();
@@ -116,10 +133,41 @@ public class FeedFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Product> products) {
             if (products != null) {
-                mAdapter.setProducts(products);
-                mAdapter.notifyDataSetChanged();
+                if (!products.isEmpty()) {
+                    progressBar.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    adapter.setProducts(products);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    final TextView emptyViewTitle = (TextView) emptyView.findViewById(R.id.empty_view_title);
+                    emptyViewTitle.setText(R.string.feed_empty_results);
+                    final Button emptyViewCTA = (Button) emptyView.findViewById(R.id.empty_view_cta);
+                    emptyViewCTA.setText(R.string.generic_retry);
+                    emptyViewCTA.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            fetchProducts();
+                        }
+                    });
+                }
             } else {
-                // TODO empty view
+                progressBar.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                final TextView emptyViewTitle = (TextView) emptyView.findViewById(R.id.empty_view_title);
+                emptyViewTitle.setText(R.string.generic_error);
+                final Button emptyViewCTA = (Button) emptyView.findViewById(R.id.empty_view_cta);
+                emptyViewCTA.setText(R.string.generic_retry);
+                emptyViewCTA.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fetchProducts();
+                    }
+                });
             }
         }
     }
@@ -145,9 +193,9 @@ public class FeedFragment extends Fragment {
         protected void onPostExecute(Product product) {
             super.onPostExecute(product);
             if (product != null) {
-                mAdapter.update(product);
+                adapter.update(product);
             } else {
-                //TODO ERROR
+                Snackbar.make(coordinatorLayout, "Could not add to cart", Snackbar.LENGTH_SHORT).show();
             }
         }
     }

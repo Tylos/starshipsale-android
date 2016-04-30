@@ -1,13 +1,13 @@
 <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinator_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<android.support.v4.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,43 +67,43 @@
                 android:id="@+id/product_model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"/>
+                android:layout_margin="@dimen/default_margin" />
 
             <TextView
                 android:id="@+id/product_manufacturer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"/>
+                android:layout_margin="@dimen/default_margin" />
 
             <TextView
                 android:id="@+id/product_class"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"/>
+                android:layout_margin="@dimen/default_margin" />
 
             <TextView
                 android:id="@+id/product_passengers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"/>
+                android:layout_margin="@dimen/default_margin" />
 
             <TextView
                 android:id="@+id/product_crew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"/>
+                android:layout_margin="@dimen/default_margin" />
 
             <TextView
                 android:id="@+id/product_cargo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"/>
+                android:layout_margin="@dimen/default_margin" />
 
             <TextView
                 android:id="@+id/product_hyperdrive_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"/>
+                android:layout_margin="@dimen/default_margin" />
 
             <TextView
                 android:id="@+id/product_description"
@@ -112,22 +112,22 @@
                 android:layout_margin="@dimen/default_margin"
                 android:text="Lorem fistrum qué dise usteer diodeno la caidita ese pedazo de jarl te va a hasé pupitaa diodeno se calle ustée mamaar ese pedazo de. Amatomaa la caidita hasta luego Lucas pupita sexuarl me cago en tus muelas. Tiene musho peligro ahorarr no te digo trigo por no llamarte Rodrigor mamaar a wan me cago en tus muelas ese hombree. Diodeno a gramenawer condemor benemeritaar. Condemor pupita a peich ese que llega tiene musho peligro papaar papaar se calle ustée ese hombree. Ese que llega hasta luego Lucas te va a hasé pupitaa condemor me cago en tus muelas te va a hasé pupitaa pupita está la cosa muy malar no te digo trigo por no llamarte Rodrigor. De la pradera al ataquerl se calle ustée amatomaa ese que llega qué dise usteer no te digo trigo por no llamarte Rodrigor quietooor por la gloria de mi madre a gramenawer. Me cago en tus muelas diodenoo diodeno fistro a gramenawer se calle ustée por la gloria de mi madre te voy a borrar el cerito de la pradera." />
         </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:src="@drawable/ic_credit_card_white_24dp"
         android:layout_margin="@dimen/default_margin"
-        />
+        android:src="@drawable/ic_credit_card_white_24dp" />
 
     <TextView
         android:id="@+id/extended_fab"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@android:color/holo_red_dark"
         android:layout_gravity="bottom"
+        android:background="@android:color/holo_red_dark"
         android:gravity="center"
-        android:text="Purchase"/>
+        android:text="Purchase" />
 </android.support.design.widget.CoordinatorLayout>

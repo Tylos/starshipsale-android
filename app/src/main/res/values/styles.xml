@@ -1,8 +1,28 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@color/space</item>
+        <item name="colorPrimaryDark">@color/space_dark</item>
+        <item name="android:windowBackground">@color/death_star</item>
+        <item name="colorAccent">@color/laser_pew_pew</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+
+        <item name="toolbarStyle">@style/Toolbar</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Toolbar styles -->
+    <style name="Toolbar" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/Toolbar.Title</item>
+    </style>
+
+    <style name="Toolbar.Title" parent ="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColorPrimary">@color/death_star</item>
+        <item name="android:textColor">@color/death_star</item>
     </style>
 
 </resources>

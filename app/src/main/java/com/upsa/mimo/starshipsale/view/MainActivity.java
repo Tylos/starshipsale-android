@@ -1,9 +1,5 @@
 package com.upsa.mimo.starshipsale.view;
 
-import com.upsa.mimo.starshipsale.R;
-import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
-import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
-
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +7,21 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
+import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     private CharSequence mTitle;
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(new DrawerArrowDrawable(this));
@@ -41,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
-        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
 
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        view.getMenu().performIdentifierAction(R.id.drawer_feed, 0);
+        openFeed();
     }
 
     @Override
@@ -76,5 +79,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openFeed() {
+        navigationView.getMenu().performIdentifierAction(R.id.drawer_feed, 0);
     }
 }

@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="item_product_divider_color">#818181</color>
+
+    <color name="space">#444348</color>
+    <color name="space_dark">#37363A</color>
+    <color name="death_star">#E6E2DC</color>
+    <color name="death_star_scrap">#D3CFCA</color>
+    <color name="laser_pew_pew">#4CAF50</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+
 </resources>
