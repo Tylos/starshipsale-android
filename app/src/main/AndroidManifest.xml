@@ -12,11 +12,37 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.MainActivity"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="@string/DEEP_LINK_HOST"
+                    android:path="/products"
+                    android:scheme="@string/DEEP_LINK_SCHEME"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".view.features.detail.ProductDetailActivity"
-            android:label="@string/title_activity_product_detail"/>
+            android:label="@string/title_activity_product_detail"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="@string/DEEP_LINK_SCHEME"
+                    android:host="@string/DEEP_LINK_HOST"
+                    android:path="/p"
+                    android:pathPattern="/p/.*"
+                    />
+            </intent-filter>
+            </activity>
         <activity
             android:name=".view.features.login.LoginActivity"
             android:label="@string/app_name">

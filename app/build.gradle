@@ -15,11 +15,16 @@ android {
 
         debug {
             buildConfigField "String", "SERVER_REST_URL", "\"http://192.168.0.101:9000\""
+            resValue "string", "DEEP_LINK_SCHEME", "\"http\""
+            resValue "string", "DEEP_LINK_HOST", "\"startshipsale.herokuapp.com\""
         }
 
         release {
             buildConfigField "String", "SERVER_REST_URL", "\"http://startshipsale.herokuapp.com\""
+            resValue "string", "DEEP_LINK_SCHEME", "\"http\""
+            resValue "string", "DEEP_LINK_HOST", "\"startshipsale.herokuapp.com\""
             minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

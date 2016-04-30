@@ -1,5 +1,8 @@
 package com.upsa.mimo.starshipsale.view.features.detail;
 
+import com.upsa.mimo.starshipsale.R;
+import com.upsa.mimo.starshipsale.domain.entities.Product;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -7,9 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.upsa.mimo.starshipsale.R;
-import com.upsa.mimo.starshipsale.domain.entities.Product;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -30,13 +30,38 @@ public class ProductDetailActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        final long productId = getIntent().getExtras().getLong(EXTRAS_PRODUCT_ID);
+
+        long productId = getDeepLinkingProductId(getIntent());
+        if (productId == -1
+                && getIntent() != null
+                && getIntent().getExtras() != null
+                && getIntent().getExtras().containsKey(EXTRAS_PRODUCT_ID)) {
+            productId = getIntent().getExtras().getLong(EXTRAS_PRODUCT_ID);
+        } else {
+            finish();
+        }
+
         Fragment fragment = ProductDetailFragment.newInstance(productId);
 
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, "fragment_tag.product_detail")
                 .commit();
+    }
+
+    protected Long getDeepLinkingProductId(Intent intent) {
+        String action = intent.getAction();
+        String dataString = intent.getDataString();
+        Long productId = -1L;
+        if (Intent.ACTION_VIEW.equals(action) && dataString != null) {
+            String productIdRaw = dataString.substring(dataString.lastIndexOf("/") + 1);
+            try {
+                productId = Long.valueOf(productIdRaw);
+            } catch (Exception e) {
+                productId = -1L;
+            }
+        }
+        return productId;
     }
 
     @Override
