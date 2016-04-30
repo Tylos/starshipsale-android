@@ -4,6 +4,7 @@
     android:layout_height="172dp"
     android:orientation="vertical"
     android:paddingTop="@dimen/status_bar_height"
+    android:background="@drawable/stars_background"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
@@ -11,6 +12,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_margin="@dimen/default_margin"
+        android:src="@drawable/placeholder_small"
         android:elevation="4dp"/>
 
     <TextView
@@ -19,8 +21,8 @@
         android:layout_above="@+id/email"
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
-        android:text="Username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        tools:text="Username"/>
     <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
@@ -29,7 +31,7 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
-        android:text="username@mymail.com"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="username@mymail.com"/>
 
 </RelativeLayout>
