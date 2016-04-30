@@ -25,4 +25,6 @@
     <string name="generic_error">Oops! Something went wrong</string>
     <string name="generic_retry">retry</string>
     <string name="feed_empty_results">This is odd.. found nothing :(</string>
+    <string name="cart_empty_title">There is nothing in your cart yet, check some ships!</string>
+    <string name="cart_empty_cta">Open Feed</string>
 </resources>
