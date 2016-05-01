@@ -35,17 +35,17 @@ public class ProductDetailFragment extends Fragment {
 
     private CoordinatorLayout coordinatorLayout;
     private FloatingActionButton fab;
-    private TextView mName;
-    private ImageView mImage;
-    private TextView mPrice;
-    private TextView mDescription;
-    private TextView mModel;
-    private TextView mManufacturer;
-    private TextView mClass;
-    private TextView mPassengers;
-    private TextView mCrew;
-    private TextView mCargo;
-    private TextView mHyperdriveRating;
+    private TextView name;
+    private ImageView image;
+    private TextView price;
+    private TextView description;
+    private TextView model;
+    private TextView manufacturer;
+    private TextView shipClass;
+    private TextView passengers;
+    private TextView crew;
+    private TextView cargo;
+    private TextView hyperdriveRating;
 
     private GoogleApiClient mClient;
     private Thing mDeepLinkTrackingObject;
@@ -122,17 +122,17 @@ public class ProductDetailFragment extends Fragment {
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
-        mName = (TextView) view.findViewById(R.id.product_name);
-        mImage = (ImageView) view.findViewById(R.id.product_image);
-        mPrice = (TextView) view.findViewById(R.id.product_price);
-        mDescription = (TextView) view.findViewById(R.id.product_description);
-        mModel = (TextView) view.findViewById(R.id.product_model);
-        mManufacturer = (TextView) view.findViewById(R.id.product_manufacturer);
-        mClass = (TextView) view.findViewById(R.id.product_class);
-        mPassengers = (TextView) view.findViewById(R.id.product_passengers);
-        mCrew = (TextView) view.findViewById(R.id.product_crew);
-        mCargo = (TextView) view.findViewById(R.id.product_cargo);
-        mHyperdriveRating = (TextView) view.findViewById(R.id.product_hyperdrive_rating);
+        name = (TextView) view.findViewById(R.id.product_name);
+        image = (ImageView) view.findViewById(R.id.product_image);
+        price = (TextView) view.findViewById(R.id.product_price);
+        description = (TextView) view.findViewById(R.id.product_description);
+        model = (TextView) view.findViewById(R.id.product_model);
+        manufacturer = (TextView) view.findViewById(R.id.product_manufacturer);
+        shipClass = (TextView) view.findViewById(R.id.product_class);
+        passengers = (TextView) view.findViewById(R.id.product_passengers);
+        crew = (TextView) view.findViewById(R.id.product_crew);
+        cargo = (TextView) view.findViewById(R.id.product_cargo);
+        hyperdriveRating = (TextView) view.findViewById(R.id.product_hyperdrive_rating);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,20 +182,20 @@ public class ProductDetailFragment extends Fragment {
     }
 
     private void renderProduct(Product product) {
-        mName.setText(product.getName());
-        mPrice.setText(product.getPrice());
-        mModel.setText(product.getModel());
-        mManufacturer.setText(product.getManufacturer());
-        mClass.setText(product.getStarshipClass());
-        mPassengers.setText(product.getPassengers());
-        mCrew.setText(product.getCrew());
-        mCargo.setText(product.getCargoCapacity());
-        mHyperdriveRating.setText(product.getHyperDriveRating());
+        name.setText(product.getName());
+        price.setText(product.getPrice());
+        model.setText(product.getModel());
+        manufacturer.setText(product.getManufacturer());
+        shipClass.setText(product.getStarshipClass());
+        passengers.setText(product.getPassengers());
+        crew.setText(product.getCrew());
+        cargo.setText(product.getCargoCapacity());
+        hyperdriveRating.setText(product.getHyperDriveRating());
 
         Picasso.with(getActivity()).
                 load(product.getImage())
                 .fit()
-                .into(mImage);
+                .into(image);
     }
 
 }
