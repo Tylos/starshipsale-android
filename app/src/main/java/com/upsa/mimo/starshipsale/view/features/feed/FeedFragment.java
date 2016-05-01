@@ -37,10 +37,6 @@ public class FeedFragment extends Fragment {
     private ProgressBar progressBar;
     private CoordinatorLayout coordinatorLayout;
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static FeedFragment newInstance() {
         FeedFragment fragment = new FeedFragment();
         Bundle args = new Bundle();

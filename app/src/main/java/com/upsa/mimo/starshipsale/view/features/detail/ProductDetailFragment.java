@@ -20,6 +20,7 @@ import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
+import com.upsa.mimo.starshipsale.view.features.purchase.PurchaseFragment;
 
 import java.io.IOException;
 
@@ -79,6 +80,17 @@ public class ProductDetailFragment extends Fragment {
         mCrew = (TextView) view.findViewById(R.id.product_crew);
         mCargo = (TextView) view.findViewById(R.id.product_cargo);
         mHyperdriveRating = (TextView) view.findViewById(R.id.product_hyperdrive_rating);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragment_container, PurchaseFragment.newInstanceForCart())
+                        .addToBackStack("purchase_cart")
+                        .commit();
+            }
+        });
     }
 
 

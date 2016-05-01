@@ -3,6 +3,7 @@
     <color name="item_product_divider_color">#818181</color>
 
     <color name="space">#444348</color>
+    <color name="space_90">#E6444348</color>
     <color name="space_dark">#37363A</color>
     <color name="death_star">#E6E2DC</color>
     <color name="death_star_scrap">#D3CFCA</color>

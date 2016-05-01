@@ -12,7 +12,7 @@
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_product_detail">ProductDetailActivity</string>
     <string name="hello_world">Hello world!</string>
@@ -28,4 +28,6 @@
     <string name="cart_empty_title">There is nothing in your cart yet, check some ships!</string>
     <string name="cart_empty_cta">Open Feed</string>
     <string name="default_dummy_description">Lorem fistrum qué dise usteer diodeno la caidita ese pedazo de jarl te va a hasé pupitaa diodeno se calle ustée mamaar ese pedazo de. Amatomaa la caidita hasta luego Lucas pupita sexuarl me cago en tus muelas. Tiene musho peligro ahorarr no te digo trigo por no llamarte Rodrigor mamaar a wan me cago en tus muelas ese hombree. Diodeno a gramenawer condemor benemeritaar. Condemor pupita a peich ese que llega tiene musho peligro papaar papaar se calle ustée ese hombree. Ese que llega hasta luego Lucas te va a hasé pupitaa condemor me cago en tus muelas te va a hasé pupitaa pupita está la cosa muy malar no te digo trigo por no llamarte Rodrigor. De la pradera al ataquerl se calle ustée amatomaa ese que llega qué dise usteer no te digo trigo por no llamarte Rodrigor quietooor por la gloria de mi madre a gramenawer. Me cago en tus muelas diodenoo diodeno fistro a gramenawer se calle ustée por la gloria de mi madre te voy a borrar el cerito de la pradera.</string>
+    <string name="purchase_text">Purchasing.....</string>
+    <string name="purchase_ok">Hurray! You got yourself a new ship</string>
 </resources>

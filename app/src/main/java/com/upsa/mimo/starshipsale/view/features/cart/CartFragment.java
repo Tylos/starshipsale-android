@@ -20,6 +20,7 @@ import com.upsa.mimo.starshipsale.api.cart.ApiCartRepository;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 import com.upsa.mimo.starshipsale.view.MainActivity;
+import com.upsa.mimo.starshipsale.view.features.purchase.PurchaseFragment;
 
 import java.io.IOException;
 import java.util.List;
@@ -80,7 +81,11 @@ public class CartFragment extends Fragment {
         cta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Purchase fragment plx
+                getFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, PurchaseFragment.newInstanceForCart(), "fragment_tag.purchase_cart")
+                        .addToBackStack("fragment_tag.purchase_cart")
+                        .commit();
             }
         });
         cta.setVisibility(View.GONE);
