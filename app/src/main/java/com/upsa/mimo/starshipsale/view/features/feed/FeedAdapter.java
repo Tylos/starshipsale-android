@@ -26,10 +26,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedItemViewHolder> {
         }
 
         @Override
-        public void onFavoriteClick(Product product) {
-        }
-
-        @Override
         public void onAddToCartClick(Product product) {
         }
     }
@@ -80,8 +76,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedItemViewHolder> {
     public interface OnProductClickListener {
 
         void onProductClick(Product product);
-
-        void onFavoriteClick(Product product);
 
         void onAddToCartClick(Product product);
     }

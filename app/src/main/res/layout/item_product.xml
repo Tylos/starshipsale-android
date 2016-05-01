@@ -78,15 +78,6 @@
                 android:background="?android:selectableItemBackground"
                 android:scaleType="center"
                 android:src="@drawable/shopping_cart_icon_state_selector" />
-
-            <ImageView
-                android:id="@+id/product_favorite"
-                android:layout_width="@dimen/min_touch_area"
-                android:layout_height="@dimen/min_touch_area"
-                android:layout_margin="4dp"
-                android:background="?android:selectableItemBackground"
-                android:scaleType="center"
-                android:src="@drawable/favorite_icon_state_selector" />
         </LinearLayout>
     </LinearLayout>
 

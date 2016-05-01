@@ -93,11 +93,6 @@ public class FeedFragment extends Fragment {
             }
 
             @Override
-            public void onFavoriteClick(Product product) {
-                // TODO Mark as addToCart
-            }
-
-            @Override
             public void onAddToCartClick(Product product) {
                 new CartAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, product);
             }

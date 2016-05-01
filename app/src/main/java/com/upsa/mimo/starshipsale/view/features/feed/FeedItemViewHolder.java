@@ -17,7 +17,6 @@ class FeedItemViewHolder extends RecyclerView.ViewHolder {
     private TextView name;
     private ImageView image;
     private TextView price;
-    private ImageView favorite;
     private ImageView addedToCart;
     private Product boundProduct;
 
@@ -32,7 +31,6 @@ class FeedItemViewHolder extends RecyclerView.ViewHolder {
         name = (TextView) itemView.findViewById(R.id.product_name);
         image = (ImageView) itemView.findViewById(R.id.product_image);
         price = (TextView) itemView.findViewById(R.id.product_price);
-        favorite = (ImageView) itemView.findViewById(R.id.product_favorite);
         addedToCart = (ImageView) itemView.findViewById(R.id.product_cart);
     }
 
@@ -41,12 +39,6 @@ class FeedItemViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 productClickListener.onProductClick(boundProduct);
-            }
-        });
-        favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productClickListener.onFavoriteClick(boundProduct);
             }
         });
 
@@ -76,7 +68,6 @@ class FeedItemViewHolder extends RecyclerView.ViewHolder {
         } finally {
             price.setText(formattedText);
         }
-        favorite.setActivated(product.isFavorite());
         addedToCart.setActivated(product.isAddedToCart());
         Picasso.with(image.getContext()).
                 load(product.getImage())
