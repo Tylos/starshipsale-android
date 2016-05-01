@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/default_margin_half"
+    android:layout_marginBottom="@dimen/default_margin_half"
+    android:orientation="horizontal"
+    tools:showIn="@layout/fragment_product_detail">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:src="@drawable/ic_people_black_24dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:shrinkColumns="1">
+
+        <TableRow>
+            <TextView
+                style="@style/DetailTableEntry"
+                android:layout_height="wrap_content"
+                android:text="Passengers" />
+
+            <TextView
+                android:id="@+id/product_passengers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                tools:text="6" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+
+                style="@style/DetailTableEntry"
+                android:layout_height="wrap_content"
+                android:text="Crew" />
+
+            <TextView
+                android:id="@+id/product_crew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                tools:text="4" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/DetailTableEntry"
+                android:layout_height="wrap_content"
+                android:text="Cargo Capacity" />
+
+            <TextView
+                android:id="@+id/product_cargo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                tools:text="10000" />
+        </TableRow>
+    </TableLayout>
+</FrameLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/default_margin"
+    android:orientation="horizontal"
+    android:layout_marginBottom="@dimen/default_margin_half"
+    tools:showIn="@layout/fragment_product_detail">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:src="@drawable/ic_memory_black_24dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:shrinkColumns="1">
+
+        <TableRow>
+
+            <TextView
+                style="@style/DetailTableEntry"
+                android:layout_height="wrap_content"
+                android:text="Model" />
+
+            <TextView
+                android:id="@+id/product_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                tools:text="YT-1300 light freigther" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/DetailTableEntry"
+                android:layout_height="wrap_content"
+                android:text="Manufacturer" />
+
+            <TextView
+                android:id="@+id/product_manufacturer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                tools:text="Corellian Enginieering Corporation aksdjlaksjdlkajsd" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/DetailTableEntry"
+                android:layout_height="wrap_content"
+                android:text="Class" />
+
+            <TextView
+                android:id="@+id/product_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                tools:text="null" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/DetailTableEntry"
+                android:layout_height="wrap_content"
+                android:text="Hyperdrive Rating" />
+
+            <TextView
+                android:id="@+id/product_hyperdrive_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="2.5" />
+        </TableRow>
+    </TableLayout>
+</FrameLayout>
