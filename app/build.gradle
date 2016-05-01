@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+
+// Version information
+def versionMajor = 0
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = 1
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -8,9 +15,20 @@ android {
         applicationId "com.upsa.mimo.starshipsale"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
     }
+
+    signingConfigs {
+        release {
+            storeFile file("starship-keystore.jks")
+            storePassword "123456"
+            keyAlias "apps"
+            keyPassword "123456"
+        }
+    }
+
+
     buildTypes {
 
         debug {
@@ -24,7 +42,7 @@ android {
             resValue "string", "DEEP_LINK_SCHEME", "\"http\""
             resValue "string", "DEEP_LINK_HOST", "\"startshipsale.herokuapp.com\""
             minifyEnabled false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
