@@ -28,6 +28,7 @@ import com.upsa.mimo.starshipsale.domain.entities.Product;
 import com.upsa.mimo.starshipsale.view.features.purchase.PurchaseFragment;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 
 public class ProductDetailFragment extends Fragment {
 
@@ -183,7 +184,17 @@ public class ProductDetailFragment extends Fragment {
 
     private void renderProduct(Product product) {
         name.setText(product.getName());
-        price.setText(product.getPrice());
+        String formattedText = null;
+        try {
+            final Double aDouble = Double.valueOf(product.getPrice());
+            NumberFormat numberFormatter = NumberFormat.getInstance();
+            numberFormatter.setMaximumFractionDigits(0);
+            formattedText = numberFormatter.format(aDouble);
+        } catch (NumberFormatException exception) {
+            formattedText = product.getPrice();
+        } finally {
+            price.setText(formattedText);
+        }
         model.setText(product.getModel());
         manufacturer.setText(product.getManufacturer());
         shipClass.setText(product.getStarshipClass());

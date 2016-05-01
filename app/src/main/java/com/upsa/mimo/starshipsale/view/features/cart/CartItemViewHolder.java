@@ -9,6 +9,8 @@ import com.squareup.picasso.Picasso;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 
+import java.text.NumberFormat;
+
 public class CartItemViewHolder  extends RecyclerView.ViewHolder {
     private TextView name;
     private ImageView image;
@@ -27,7 +29,17 @@ public class CartItemViewHolder  extends RecyclerView.ViewHolder {
 
     private void renderProduct(Product product) {
         name.setText(product.getName());
-        price.setText(product.getPrice() + " €");
+        String formattedText = null;
+        try {
+            final Double aDouble = Double.valueOf(product.getPrice());
+            NumberFormat numberFormatter = NumberFormat.getInstance();
+            numberFormatter.setMaximumFractionDigits(0);
+            formattedText = numberFormatter.format(aDouble);
+        } catch (NumberFormatException exception) {
+            formattedText = product.getPrice();
+        } finally {
+            price.setText(formattedText);
+        }
         Picasso.with(image.getContext()).
                 load(product.getImage())
                 .fit()

@@ -23,6 +23,7 @@ import com.upsa.mimo.starshipsale.view.MainActivity;
 import com.upsa.mimo.starshipsale.view.features.purchase.PurchaseFragment;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -139,7 +140,17 @@ public class CartFragment extends Fragment {
                         }
 
                         if (total > 0) {
-                            ctaText.setText(String.format("Purchase - %d", total));
+                            String formattedText = null;
+                            try {
+                                NumberFormat numberFormatter = NumberFormat.getInstance();
+                                numberFormatter.setMaximumFractionDigits(0);
+                                formattedText = numberFormatter.format(total);
+                            } catch (NumberFormatException exception) {
+                                formattedText = product.getPrice();
+                            } finally {
+                                ctaText.setText(String.format("Purchase - %d", formattedText));
+                            }
+
                             cta.setVisibility(View.VISIBLE);
                             cta.setVisibility(View.VISIBLE);
                             cta.setTranslationY(cta.getHeight());
