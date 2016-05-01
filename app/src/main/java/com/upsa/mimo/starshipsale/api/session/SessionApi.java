@@ -8,6 +8,6 @@ import retrofit2.http.POST;
 
 public interface SessionApi {
 
-    @POST("session/login")
+    @POST("/api/session/login")
     Call<Session> login(@Body LoginBody info);
 }

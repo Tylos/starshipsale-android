@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
+import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 
 import java.io.IOException;
@@ -28,9 +30,8 @@ public class ProductDetailFragment extends Fragment {
 
     private static final String ARGUMENTS_PRODUCT_ID = "arguments.product_id";
 
-    private CoordinatorLayout mCoordinatorLayout;
-    private FloatingActionButton mFab;
-    private View mExtendedFab;
+    private CoordinatorLayout coordinatorLayout;
+    private FloatingActionButton fab;
     private TextView mName;
     private ImageView mImage;
     private TextView mPrice;
@@ -64,9 +65,8 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
-        mFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        mExtendedFab = view.findViewById(R.id.extended_fab);
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         mName = (TextView) view.findViewById(R.id.product_name);
         mImage = (ImageView) view.findViewById(R.id.product_image);
@@ -95,7 +95,8 @@ public class ProductDetailFragment extends Fragment {
         @Override
         protected Product doInBackground(String... params) {
             try {
-                return new ApiProductRepository(BuildConfig.SERVER_REST_URL).getById(params[0]);
+                final SessionRepository sessionRepository = new SessionRepository(getActivity(), BuildConfig.SERVER_REST_URL);
+                return new ApiProductRepository(BuildConfig.SERVER_REST_URL, sessionRepository.getCurrentSession()).getById(params[0]);
             } catch (IOException e) {
                 return null;
             }
@@ -106,7 +107,15 @@ public class ProductDetailFragment extends Fragment {
             if (product != null) {
                 renderProduct(product);
             } else {
-                // TODO empty view
+                Snackbar.make(coordinatorLayout, R.string.generic_error, Snackbar.LENGTH_SHORT)
+                        .setCallback(new Snackbar.Callback() {
+                            @Override
+                            public void onDismissed(Snackbar snackbar, int event) {
+                                super.onDismissed(snackbar, event);
+                                getActivity().finish();
+                            }
+                        })
+                        .show();
             }
         }
     }

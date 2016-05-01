@@ -32,7 +32,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "SERVER_REST_URL", "\"http://192.168.0.101:9000\""
+            buildConfigField "String", "SERVER_REST_URL", "\"http://192.168.0.125:9000\""
             resValue "string", "DEEP_LINK_SCHEME", "\"http\""
             resValue "string", "DEEP_LINK_HOST", "\"startshipsale.herokuapp.com\""
         }

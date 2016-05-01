@@ -2,6 +2,7 @@ package com.upsa.mimo.starshipsale.api.cart;
 
 import com.upsa.mimo.starshipsale.api.ApiBuilder;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
+import com.upsa.mimo.starshipsale.domain.entities.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,8 +13,8 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
 
     private CartApi cartApi;
 
-    public ApiCartRepository(String serverUrl) {
-        this.cartApi = new ApiBuilder<>(CartApi.class, serverUrl).buildApiResource();
+    public ApiCartRepository(String serverUrl, Session session) {
+        this.cartApi = new ApiBuilder<>(CartApi.class, serverUrl, session).buildApiResource();
     }
 
     @Override
@@ -28,7 +29,7 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
 
     @Override
     public Product addToCart(String id) throws IOException {
-        final Response<Product> response = cartApi.addToCart(id).execute();
+        final Response<Product> response = cartApi.addToCart(id, "").execute();
         if (response.isSuccessful()) {
             return response.body();
         } else {

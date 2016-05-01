@@ -1,5 +1,7 @@
 package com.upsa.mimo.starshipsale.api;
 
+import com.upsa.mimo.starshipsale.domain.entities.Session;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -17,14 +19,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiBuilder<T> {
 
     private Class<T> mTypeParameterClass;
-
     private String mServerURL;
+    private Session currentSession;
 
     public ApiBuilder(
             Class<T> typeParameterClass,
             String serverURL) {
-        mTypeParameterClass = typeParameterClass;
-        mServerURL = serverURL;
+        this(typeParameterClass, serverURL, null);
+    }
+
+    public ApiBuilder(Class<T> mTypeParameterClass, String mServerURL, Session currentSession) {
+        this.mTypeParameterClass = mTypeParameterClass;
+        this.mServerURL = mServerURL;
+        this.currentSession = currentSession;
     }
 
     public T buildApiResource() {
@@ -44,13 +51,15 @@ public class ApiBuilder<T> {
                 Request original = chain.request();
 
                 // Customize the request
-                Request request = original.newBuilder()
+                final Request.Builder requestBuilder = original.newBuilder()
                         .addHeader("Accept", "application/json")
                         .addHeader("Content-Type", "application/json")
-                        .method(original.method(), original.body())
-                        .build();
+                        .method(original.method(), original.body());
 
-                return chain.proceed(request);
+                if (currentSession != null) {
+                    requestBuilder.addHeader("X-AUTH-TOKEN", currentSession.getToken());
+                }
+                return chain.proceed(requestBuilder.build());
             }
         }).build();
     }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ViewSwitcher;
 
+import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Session;
@@ -68,7 +69,7 @@ public class LoginActivityFragment extends Fragment {
         @Override
         protected Session doInBackground(Pair<String, String>... params) {
             try {
-                return new SessionRepository("http://startshipsale.herokuapp.com/api/")
+                return new SessionRepository(getActivity(), BuildConfig.SERVER_REST_URL)
                         .login(
                                 params[0].first,
                                 params[0].second);

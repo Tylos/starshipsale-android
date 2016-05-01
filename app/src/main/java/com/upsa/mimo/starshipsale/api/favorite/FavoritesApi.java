@@ -12,12 +12,12 @@ import retrofit2.http.Path;
 
 public interface FavoritesApi {
 
-    @GET("favorites")
+    @GET("/api/favorites")
     Call<List<Product>> list();
 
-    @POST("favorites/{productId}")
+    @POST("/api/favorites/{productId}")
     Call<Product> favorite(@Path("productId")String productId);
 
-    @DELETE("favorites/{productId}")
+    @DELETE("/api/favorites/{productId}")
     Call<Product> unfavorite(@Path("productId")String productId);
 }
