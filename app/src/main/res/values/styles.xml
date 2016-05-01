@@ -25,4 +25,9 @@
         <item name="android:textColor">@color/death_star</item>
     </style>
 
+    <style name="App.TextAppearance.Medium" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

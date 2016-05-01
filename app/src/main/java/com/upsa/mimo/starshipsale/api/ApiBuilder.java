@@ -35,7 +35,6 @@ public class ApiBuilder<T> {
                 .addConverterFactory(GsonConverterFactory.create());
 
         return retrofitBuilder.build().create(mTypeParameterClass);
-
     }
 
     private OkHttpClient buildOkHttpClient() {

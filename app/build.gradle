@@ -42,6 +42,7 @@ android {
             resValue "string", "DEEP_LINK_SCHEME", "\"http\""
             resValue "string", "DEEP_LINK_HOST", "\"startshipsale.herokuapp.com\""
             minifyEnabled false
+            debuggable true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
