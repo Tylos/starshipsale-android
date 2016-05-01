@@ -9,17 +9,16 @@ public class Product {
     @SerializedName("name") private final String name;
     @SerializedName("model") private final String model;
     @SerializedName("manufacturer") private final String manufacturer;
-    @SerializedName("startship_class") private final String starshipClass;
+    @SerializedName("starship_class") private final String starshipClass;
     @SerializedName("image")private final String image;
     @SerializedName("cost_in_credits") private final String costInCredits;
     @SerializedName("crew") private final String crew;
-    @SerializedName("hyperdrive_capacity") private final String hyperdriveRating;
     @SerializedName("cargo_capacity") private final String cargoCapacity;
     @SerializedName("is_favorite") private final Boolean isFavorite;
     @SerializedName("is_featured") private final Boolean isFeatured;
     @SerializedName("is_in_cart") private final Boolean isAddedToCart;
     @SerializedName("passengers") private final String passengers;
-    @SerializedName("hiperdrive_rating") private final String hyperDriveRating;
+    @SerializedName("hyperdrive_rating") private final String hyperDriveRating;
 
     private final String description;
 
@@ -87,7 +86,6 @@ public class Product {
         image = builder.image;
         costInCredits = builder.costInCredits;
         crew = builder.crew;
-        hyperdriveRating = builder.hyperdriveRating;
         cargoCapacity = builder.cargoCapacity;
         isFavorite = builder.isFavorite;
         isFeatured = builder.isFeatured;
@@ -111,7 +109,6 @@ public class Product {
         builder.image = copy.image;
         builder.costInCredits = copy.costInCredits;
         builder.crew = copy.crew;
-        builder.hyperdriveRating = copy.hyperdriveRating;
         builder.cargoCapacity = copy.cargoCapacity;
         builder.isFavorite = copy.isFavorite;
         builder.isFeatured = copy.isFeatured;
@@ -132,7 +129,6 @@ public class Product {
         private String image;
         private String costInCredits;
         private String crew;
-        private String hyperdriveRating;
         private String cargoCapacity;
         private Boolean isFavorite;
         private Boolean isFeatured;
@@ -181,11 +177,6 @@ public class Product {
 
         public Builder withCrew(String val) {
             crew = val;
-            return this;
-        }
-
-        public Builder withHyperdriveRating(String val) {
-            hyperdriveRating = val;
             return this;
         }
 
