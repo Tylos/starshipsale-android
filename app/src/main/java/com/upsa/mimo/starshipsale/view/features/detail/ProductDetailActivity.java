@@ -3,10 +3,10 @@ package com.upsa.mimo.starshipsale.view.features.detail;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +45,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Fragment fragment = ProductDetailFragment.newInstance(productId);
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, "fragment_tag.product_detail")
                 .commit();
