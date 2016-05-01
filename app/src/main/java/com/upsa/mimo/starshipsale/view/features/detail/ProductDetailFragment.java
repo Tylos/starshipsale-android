@@ -1,19 +1,24 @@
 package com.upsa.mimo.starshipsale.view.features.detail;
 
 import android.annotation.TargetApi;
-import android.app.Fragment;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.R;
@@ -24,9 +29,6 @@ import com.upsa.mimo.starshipsale.view.features.purchase.PurchaseFragment;
 
 import java.io.IOException;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class ProductDetailFragment extends Fragment {
 
     private static final String ARGUMENTS_PRODUCT_ID = "arguments.product_id";
@@ -45,10 +47,13 @@ public class ProductDetailFragment extends Fragment {
     private TextView mCargo;
     private TextView mHyperdriveRating;
 
+    private GoogleApiClient mClient;
+    private Thing mDeepLinkTrackingObject;
+
     public ProductDetailFragment() {
     }
 
-    public static android.app.Fragment newInstance(String productId) {
+    public static Fragment newInstance(String productId) {
         Fragment fragment = new ProductDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENTS_PRODUCT_ID, productId);
@@ -60,6 +65,54 @@ public class ProductDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_product_detail, container, false);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mClient = new GoogleApiClient.Builder(getContext()).addApi(AppIndex.API).build();
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        new DetailAsyncTask().executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR,
+                getArguments().getString(ARGUMENTS_PRODUCT_ID));
+    }
+
+    @Override
+    public void onStop() {
+        if(mDeepLinkTrackingObject != null) {
+            stopDeepLinkingEvent(mDeepLinkTrackingObject);
+        }
+        super.onStop();
+    }
+
+    private void startDeepLinkingEvent(Thing object){
+        mClient.connect();
+        AppIndex.AppIndexApi.start(mClient, getDeepLinkAction(object));
+    }
+
+    private void stopDeepLinkingEvent(Thing object){
+        AppIndex.AppIndexApi.end(mClient, getDeepLinkAction(object));
+        mClient.disconnect();
+    }
+
+    private Thing initDeepLinkObject(String title, String description, String url){
+        return new Thing.Builder()
+                .setName(title)
+                .setDescription(description)
+                .setUrl(Uri.parse(url))
+                .build();
+    }
+
+    public Action getDeepLinkAction(Thing object) {
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -93,15 +146,6 @@ public class ProductDetailFragment extends Fragment {
         });
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        new DetailAsyncTask().executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR,
-                getArguments().getString(ARGUMENTS_PRODUCT_ID));
-    }
-
     private class DetailAsyncTask extends AsyncTask<String, Void, Product> {
 
         @Override
@@ -118,6 +162,11 @@ public class ProductDetailFragment extends Fragment {
         protected void onPostExecute(Product product) {
             if (product != null) {
                 renderProduct(product);
+
+                mDeepLinkTrackingObject = initDeepLinkObject(product.getName(),product.getModel(),
+                        BuildConfig.SERVER_REST_URL + "/p/" + product.getId());
+                startDeepLinkingEvent(mDeepLinkTrackingObject);
+
             } else {
                 Snackbar.make(coordinatorLayout, R.string.generic_error, Snackbar.LENGTH_SHORT)
                         .setCallback(new Snackbar.Callback() {
