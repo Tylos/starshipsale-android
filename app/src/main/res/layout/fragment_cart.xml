@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_cart_product"
+        android:layout_marginBottom="56dp"
         />
 
     <LinearLayout
@@ -48,12 +49,30 @@
         android:indeterminate="true"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/extended_fab"
+    <FrameLayout
+        android:id="@+id/cta"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="?colorAccent"
         android:layout_gravity="bottom"
-        android:gravity="center"
-        android:text="Purchase"/>
+        android:foreground="?selectableItemBackground"
+        >
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white"
+            android:textAllCaps="true"
+            android:id="@+id/cta_text"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/republic_credit_white"
+            android:drawableEnd="@drawable/republic_credit_white"
+            android:clickable="false"
+            tools:text="Purchase"/>
+
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

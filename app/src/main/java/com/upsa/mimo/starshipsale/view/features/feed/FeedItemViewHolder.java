@@ -1,6 +1,5 @@
 package com.upsa.mimo.starshipsale.view.features.feed;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,60 +13,58 @@ import java.text.NumberFormat;
 
 class FeedItemViewHolder extends RecyclerView.ViewHolder {
 
-    private Context itemViewContext;
-    private FeedAdapter.OnProductClickListener mProductClickListener;
-    private TextView mName;
-    private ImageView mImage;
-    private TextView mPrice;
-    private ImageView mFavorite;
-    private ImageView mAddedToCart;
-    private Product mBoundProduct;
+    private FeedAdapter.OnProductClickListener productClickListener;
+    private TextView name;
+    private ImageView image;
+    private TextView price;
+    private ImageView favorite;
+    private ImageView addedToCart;
+    private Product boundProduct;
 
     public FeedItemViewHolder(View itemView, FeedAdapter.OnProductClickListener productClickListener) {
         super(itemView);
-        itemViewContext = itemView.getContext();
         findViews(itemView);
-        mProductClickListener = productClickListener;
+        this.productClickListener = productClickListener;
         attachListeners(itemView);
     }
 
     private void findViews(View itemView) {
-        mName = (TextView) itemView.findViewById(R.id.product_name);
-        mImage = (ImageView) itemView.findViewById(R.id.product_image);
-        mPrice = (TextView) itemView.findViewById(R.id.product_price);
-        mFavorite = (ImageView) itemView.findViewById(R.id.product_favorite);
-        mAddedToCart = (ImageView) itemView.findViewById(R.id.product_cart);
+        name = (TextView) itemView.findViewById(R.id.product_name);
+        image = (ImageView) itemView.findViewById(R.id.product_image);
+        price = (TextView) itemView.findViewById(R.id.product_price);
+        favorite = (ImageView) itemView.findViewById(R.id.product_favorite);
+        addedToCart = (ImageView) itemView.findViewById(R.id.product_cart);
     }
 
     private void attachListeners(View itemView) {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProductClickListener.onProductClick(mBoundProduct);
+                productClickListener.onProductClick(boundProduct);
             }
         });
-        mFavorite.setOnClickListener(new View.OnClickListener() {
+        favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProductClickListener.onFavoriteClick(mBoundProduct);
+                productClickListener.onFavoriteClick(boundProduct);
             }
         });
 
-        mAddedToCart.setOnClickListener(new View.OnClickListener() {
+        addedToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProductClickListener.onAddToCartClick(mBoundProduct);
+                productClickListener.onAddToCartClick(boundProduct);
             }
         });
     }
 
     public void bind(Product product) {
-        mBoundProduct = product;
-        renderProduct(mBoundProduct);
+        boundProduct = product;
+        renderProduct(boundProduct);
     }
 
     private void renderProduct(Product product) {
-        mName.setText(product.getName());
+        name.setText(product.getName());
         String formattedText = null;
         try {
             final Double aDouble = Double.valueOf(product.getPrice());
@@ -77,13 +74,13 @@ class FeedItemViewHolder extends RecyclerView.ViewHolder {
         } catch (NumberFormatException exception) {
             formattedText = product.getPrice();
         } finally {
-            mPrice.setText(formattedText);
+            price.setText(formattedText);
         }
-        mFavorite.setActivated(product.isFavorite());
-        mAddedToCart.setActivated(product.isAddedToCart());
-        Picasso.with(itemViewContext).
+        favorite.setActivated(product.isFavorite());
+        addedToCart.setActivated(product.isAddedToCart());
+        Picasso.with(image.getContext()).
                 load(product.getImage())
                 .fit()
-                .into(mImage);
+                .into(image);
     }
 }

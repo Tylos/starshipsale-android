@@ -5,19 +5,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 
 public class CartItemViewHolder  extends RecyclerView.ViewHolder {
-    private TextView mName;
-    private ImageView mImage;
-    private TextView mPrice;
+    private TextView name;
+    private ImageView image;
+    private TextView price;
 
     public CartItemViewHolder(View layoutView) {
         super(layoutView);
-        mName = (TextView) layoutView.findViewById(R.id.product_name);
-        mImage = (ImageView) layoutView.findViewById(R.id.product_image);
-        mPrice = (TextView) layoutView.findViewById(R.id.product_price);
+        name = (TextView) layoutView.findViewById(R.id.product_name);
+        image = (ImageView) layoutView.findViewById(R.id.product_image);
+        price = (TextView) layoutView.findViewById(R.id.product_price);
     }
 
     public void bind(Product product) {
@@ -25,7 +26,11 @@ public class CartItemViewHolder  extends RecyclerView.ViewHolder {
     }
 
     private void renderProduct(Product product) {
-        mName.setText(product.getName());
-        mPrice.setText(product.getPrice() + " €");
+        name.setText(product.getName());
+        price.setText(product.getPrice() + " €");
+        Picasso.with(image.getContext()).
+                load(product.getImage())
+                .fit()
+                .into(image);
     }
 }

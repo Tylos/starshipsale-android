@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,10 +30,11 @@ import java.util.List;
 public class CartFragment extends Fragment {
     private RecyclerView recyclerView;
     private CartAdapter adapter;
-    private TextView cta;
+    private FrameLayout cta;
     private View emptyView;
     private ProgressBar progressBar;
     private CoordinatorLayout coordinatorLayout;
+    private TextView ctaText;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -59,12 +61,14 @@ public class CartFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        cta = (TextView) view.findViewById(R.id.extended_fab);
+        cta = (FrameLayout) view.findViewById(R.id.cta);
+        ctaText = (TextView) view.findViewById(R.id.cta_text);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getActivity(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(layoutManager);
+
 
         adapter = new CartAdapter();
         recyclerView.setAdapter(adapter);
@@ -130,7 +134,7 @@ public class CartFragment extends Fragment {
                         }
 
                         if (total > 0) {
-                            cta.setText(String.format("Purchase - %d", total));
+                            ctaText.setText(String.format("Purchase - %d", total));
                             cta.setVisibility(View.VISIBLE);
                             cta.setVisibility(View.VISIBLE);
                             cta.setTranslationY(cta.getHeight());
