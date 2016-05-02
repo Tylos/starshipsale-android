@@ -148,7 +148,7 @@ public class CartFragment extends Fragment {
                             } catch (NumberFormatException exception) {
                                 formattedText = product.getPrice();
                             } finally {
-                                ctaText.setText(String.format("Purchase - %d", formattedText));
+                                ctaText.setText(String.format("Purchase - %s", formattedText));
                             }
 
                             cta.setVisibility(View.VISIBLE);
