@@ -4,8 +4,8 @@ apply plugin: 'com.android.application'
 // Version information
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 0
-def versionBuild = 2
+def versionPatch = 1
+def versionBuild = 3
 
 android {
     compileSdkVersion 23
@@ -44,7 +44,7 @@ android {
             resValue "string", "DEEP_LINK_SCHEME", "\"http\""
             resValue "string", "DEEP_LINK_HOST", "\"startshipsale.herokuapp.com\""
             minifyEnabled false
-            debuggable true
+            //debuggable true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
