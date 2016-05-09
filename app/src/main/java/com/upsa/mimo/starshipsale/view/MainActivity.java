@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
 import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
+import com.upsa.mimo.starshipsale.view.features.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +34,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        configureView();
+        openFeed();
+        requireLogin();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void requireLogin() {
+        LoginActivity.launch(this);
+    }
+
+    private void configureView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -67,18 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        openFeed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void openFeed() {
