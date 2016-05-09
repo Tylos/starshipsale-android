@@ -1,9 +1,10 @@
 package com.upsa.mimo.starshipsale.api.purchase;
 
+import android.content.Context;
+
 import com.upsa.mimo.starshipsale.api.ApiBuilder;
 import com.upsa.mimo.starshipsale.api.cart.CartApi;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
-import com.upsa.mimo.starshipsale.domain.entities.Session;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class ApiPurchaseRepository implements com.upsa.mimo.starshipsale.domain.
     private final CartApi cartApi;
     private final PurchaseApi productApi;
 
-    public ApiPurchaseRepository(String serverUrl, Session session) {
-        this.productApi = new ApiBuilder<>(PurchaseApi.class, serverUrl, session).buildApiResource();
-        this.cartApi = new ApiBuilder<>(CartApi.class, serverUrl, session).buildApiResource();
+    public ApiPurchaseRepository(Context context, String serverUrl) {
+        this.productApi = new ApiBuilder<>(context, PurchaseApi.class, serverUrl).buildApiResource();
+        this.cartApi = new ApiBuilder<>(context, CartApi.class, serverUrl).buildApiResource();
     }
 
 

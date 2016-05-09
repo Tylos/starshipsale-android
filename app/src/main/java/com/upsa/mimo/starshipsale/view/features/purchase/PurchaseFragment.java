@@ -13,7 +13,6 @@ import android.widget.ViewSwitcher;
 import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.purchase.ApiPurchaseRepository;
-import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 
 import java.io.IOException;
 
@@ -92,9 +91,8 @@ public class PurchaseFragment extends Fragment {
                 }
 
                 Type type = params[0];
-                final SessionRepository sessionRepository = new SessionRepository(getActivity(), BuildConfig.SERVER_REST_URL);
                 final ApiPurchaseRepository apiPurchaseRepository =
-                        new ApiPurchaseRepository(BuildConfig.SERVER_REST_URL, sessionRepository.getCurrentSession());
+                        new ApiPurchaseRepository(getActivity(), BuildConfig.SERVER_REST_URL);
                 if (type.equals(Type.ITEM)) {
                     apiPurchaseRepository.purchase(getArguments().getString(EXTRAS_ITEM_ID));
                 } else {

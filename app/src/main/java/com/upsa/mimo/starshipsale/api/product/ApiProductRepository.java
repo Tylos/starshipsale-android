@@ -1,8 +1,9 @@
 package com.upsa.mimo.starshipsale.api.product;
 
+import android.content.Context;
+
 import com.upsa.mimo.starshipsale.api.ApiBuilder;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
-import com.upsa.mimo.starshipsale.domain.entities.Session;
 import com.upsa.mimo.starshipsale.domain.repositories.ProductRepository;
 
 import java.io.IOException;
@@ -14,8 +15,8 @@ public class ApiProductRepository implements ProductRepository {
 
     private ProductApi productApi;
 
-    public ApiProductRepository(String serverUrl, Session session) {
-        this.productApi = new ApiBuilder<>(ProductApi.class, serverUrl, session).buildApiResource();
+    public ApiProductRepository(Context context, String serverUrl) {
+        this.productApi = new ApiBuilder<>(context, ProductApi.class, serverUrl).buildApiResource();
     }
 
     @Override

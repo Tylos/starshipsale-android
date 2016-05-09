@@ -19,7 +19,6 @@ import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.cart.ApiCartRepository;
 import com.upsa.mimo.starshipsale.api.product.ApiProductRepository;
-import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 import com.upsa.mimo.starshipsale.view.features.detail.ProductDetailActivity;
 
@@ -117,8 +116,7 @@ public class FeedFragment extends Fragment {
         @Override
         protected List<Product> doInBackground(Void... params) {
             try {
-                final SessionRepository sessionRepository = new SessionRepository(getActivity(), BuildConfig.SERVER_REST_URL);
-                return new ApiProductRepository(BuildConfig.SERVER_REST_URL, sessionRepository.getCurrentSession()).getAll();
+                return new ApiProductRepository(getActivity(), BuildConfig.SERVER_REST_URL).getAll();
             } catch (IOException e) {
                 return null;
             }
@@ -170,8 +168,7 @@ public class FeedFragment extends Fragment {
 
         @Override
         protected Product doInBackground(Product... params) {
-            final SessionRepository sessionRepository = new SessionRepository(getActivity(), BuildConfig.SERVER_REST_URL);
-            final ApiCartRepository apiCartRepository = new ApiCartRepository(BuildConfig.SERVER_REST_URL, sessionRepository.getCurrentSession());
+            final ApiCartRepository apiCartRepository = new ApiCartRepository(getActivity(), BuildConfig.SERVER_REST_URL);
             Product product = params[0];
             try {
                 if (!product.isAddedToCart()) {

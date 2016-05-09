@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.cart.ApiCartRepository;
-import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
 import com.upsa.mimo.starshipsale.view.MainActivity;
 import com.upsa.mimo.starshipsale.view.features.purchase.PurchaseFragment;
@@ -114,8 +113,7 @@ public class CartFragment extends Fragment {
         @Override
         protected List<Product> doInBackground(Void... params) {
             try {
-                SessionRepository sessionRepository = new SessionRepository(getActivity(), BuildConfig.SERVER_REST_URL);
-                return new ApiCartRepository(BuildConfig.SERVER_REST_URL, sessionRepository.getCurrentSession()).getAll();
+                return new ApiCartRepository(getActivity(), BuildConfig.SERVER_REST_URL).getAll();
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;

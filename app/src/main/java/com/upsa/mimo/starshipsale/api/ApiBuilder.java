@@ -1,6 +1,6 @@
 package com.upsa.mimo.starshipsale.api;
 
-import com.upsa.mimo.starshipsale.domain.entities.Session;
+import android.content.Context;
 
 import java.io.IOException;
 
@@ -18,30 +18,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiBuilder<T> {
 
-    private Class<T> mTypeParameterClass;
-    private String mServerURL;
-    private Session currentSession;
+    private Class<T> typeParameterClass;
+    private String serverURL;
 
-    public ApiBuilder(
-            Class<T> typeParameterClass,
-            String serverURL) {
-        this(typeParameterClass, serverURL, null);
-    }
-
-    public ApiBuilder(Class<T> mTypeParameterClass, String mServerURL, Session currentSession) {
-        this.mTypeParameterClass = mTypeParameterClass;
-        this.mServerURL = mServerURL;
-        this.currentSession = currentSession;
+    public ApiBuilder(Context context, Class<T> typeParameterClass, String serverURL) {
+        this.typeParameterClass = typeParameterClass;
+        this.serverURL = serverURL;
     }
 
     public T buildApiResource() {
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .baseUrl(mServerURL)
+                .baseUrl(serverURL)
                 .client(buildOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create());
 
-        return retrofitBuilder.build().create(mTypeParameterClass);
+        return retrofitBuilder.build().create(typeParameterClass);
     }
 
     private OkHttpClient buildOkHttpClient() {
@@ -56,9 +48,9 @@ public class ApiBuilder<T> {
                         .addHeader("Content-Type", "application/json")
                         .method(original.method(), original.body());
 
-                if (currentSession != null) {
-                    requestBuilder.addHeader("X-AUTH-TOKEN", currentSession.getToken());
-                }
+//                if (token != null) {
+//                    requestBuilder.addHeader("X-AUTH-TOKEN", token);
+//                }
                 return chain.proceed(requestBuilder.build());
             }
         }).build();

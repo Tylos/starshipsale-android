@@ -1,8 +1,9 @@
 package com.upsa.mimo.starshipsale.api.cart;
 
+import android.content.Context;
+
 import com.upsa.mimo.starshipsale.api.ApiBuilder;
 import com.upsa.mimo.starshipsale.domain.entities.Product;
-import com.upsa.mimo.starshipsale.domain.entities.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,8 +14,8 @@ public class ApiCartRepository implements com.upsa.mimo.starshipsale.domain.repo
 
     private CartApi cartApi;
 
-    public ApiCartRepository(String serverUrl, Session session) {
-        this.cartApi = new ApiBuilder<>(CartApi.class, serverUrl, session).buildApiResource();
+    public ApiCartRepository(Context context, String serverUrl) {
+        this.cartApi = new ApiBuilder<>(context, CartApi.class, serverUrl).buildApiResource();
     }
 
     @Override
