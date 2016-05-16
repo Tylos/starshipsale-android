@@ -17,7 +17,31 @@ public class SessionRepository {
         this.sessionApi = new ApiBuilder<>(context, SessionApi.class, serverUrl).buildApiResource();
     }
 
-    public Session login(String email, String password) throws IOException {
+    /**
+     * Register a new account in StarshipSale
+     *
+     * @param email             user email - must be unique
+     * @param password          user password
+     * @throws IOException      if there is any error
+     */
+    public void register(String email, String password) throws IOException {
+        // Surprise! No different implementation here as api is not prepared but methods are
+        // segregated for exercises purposes
+        doLogin(email, password);
+    }
+
+    /**
+     * Logs the user in StarshipSale using arguments as credentials
+     *
+     * @param email             user email
+     * @param password          user password
+     * @throws IOException
+     */
+    public void login(String email, String password) throws IOException {
+        doLogin(email, password);
+    }
+
+    private Session doLogin(String email, String password) throws IOException {
         final LoginBody body = new LoginBody(email, password);
         final Response<Session> response = sessionApi.login(body).execute();
         if (response.isSuccessful()) {

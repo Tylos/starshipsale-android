@@ -13,7 +13,6 @@ import android.widget.ViewSwitcher;
 import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
-import com.upsa.mimo.starshipsale.domain.entities.Session;
 
 import java.io.IOException;
 
@@ -61,8 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Bundle doInBackground(String... params) {
             try {
-                final Session session = new SessionRepository(LoginActivity.this, BuildConfig.SERVER_REST_URL)
-                        .login(params[0], params[1]);
+                new SessionRepository(LoginActivity.this, BuildConfig.SERVER_REST_URL).login(params[0], params[1]);
 
                 return new Bundle();
             } catch (IOException e) {
