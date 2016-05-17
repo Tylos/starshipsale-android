@@ -3,14 +3,21 @@ package com.upsa.mimo.starshipsale.view.features.authentication;
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
+import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+
+import com.upsa.mimo.starshipsale.view.features.login.LoginActivity;
 
 public class Authenticator extends AbstractAccountAuthenticator {
 
+    private Context context;
+
     public Authenticator(Context context) {
         super(context);
+        this.context = context;
     }
 
     @Override
@@ -20,7 +27,11 @@ public class Authenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        return null;
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+        return bundle;
     }
 
     @Override
