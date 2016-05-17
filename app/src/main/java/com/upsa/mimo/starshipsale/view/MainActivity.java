@@ -1,5 +1,11 @@
 package com.upsa.mimo.starshipsale.view;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,14 +18,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.upsa.mimo.starshipsale.R;
 import com.upsa.mimo.starshipsale.view.features.cart.CartFragment;
 import com.upsa.mimo.starshipsale.view.features.feed.FeedFragment;
-import com.upsa.mimo.starshipsale.view.features.login.LoginActivity;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int ADD_ACCOUNT_REQUEST_CODE = 42;
     private CharSequence mTitle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -51,7 +60,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requireLogin() {
-        LoginActivity.launch(this);
+        final AccountManager accountManager = AccountManager.get(getApplicationContext());
+        final Account[] starshipSaleAccounts = accountManager.getAccountsByType(getString(R.string.account_type));
+        if (starshipSaleAccounts.length > 0) {
+            setCurrentAccount(starshipSaleAccounts[0]);
+        } else {
+            accountManager.addAccount(
+                    getString(R.string.account_type),
+                    null,
+                    null,
+                    null,
+                    this,
+                    new AccountManagerCallback<Bundle>() {
+                        @Override
+                        public void run(AccountManagerFuture<Bundle> future) {
+                            try {
+                                final Bundle result = future.getResult();
+                                if (isSuccess(result)) {
+                                    final String accountName = result.getString(AccountManager.KEY_ACCOUNT_NAME);
+                                    Toast.makeText(MainActivity.this,
+                                            "Add account: " + accountName,
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+                                    final String errorMessage = result.getString(AccountManager.KEY_ERROR_MESSAGE);
+                                    Toast.makeText(MainActivity.this,
+                                            "Error: " + errorMessage,
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            } catch (OperationCanceledException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (AuthenticatorException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        private boolean isSuccess(Bundle result) {
+                            return result.containsKey(AccountManager.KEY_ACCOUNT_NAME)
+                                    && result.containsKey(AccountManager.KEY_ACCOUNT_TYPE);
+                        }
+                    },
+                    null
+            );
+
+        }
+    }
+
+    private void setCurrentAccount(Account currentAccount) {
+        Toast.makeText(MainActivity.this,
+                "Log in as: " + currentAccount.name,
+                Toast.LENGTH_LONG).show();
     }
 
     private void configureView() {
