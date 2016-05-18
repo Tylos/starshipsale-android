@@ -54,7 +54,7 @@ public class Authenticator extends AbstractAccountAuthenticator {
                 bundle.putString(AccountManager.KEY_ACCOUNT_NAME, userName);
                 bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, accountType);
                 return bundle;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 bundle.putInt(AccountManager.KEY_ERROR_CODE, AccountManager.ERROR_CODE_NETWORK_ERROR);
                 bundle.putString(AccountManager.KEY_ERROR_MESSAGE, "Something went wrong " + e.getMessage());
                 return bundle;

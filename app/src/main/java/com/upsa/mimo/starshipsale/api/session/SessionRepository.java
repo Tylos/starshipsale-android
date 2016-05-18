@@ -11,6 +11,7 @@ import retrofit2.Response;
 
 public class SessionRepository {
 
+    public static final int UNAUTHORIZED_CODE = 401;
     private SessionApi sessionApi;
 
     public SessionRepository(Context context, String serverUrl) {
@@ -24,7 +25,7 @@ public class SessionRepository {
      * @param password          user password
      * @throws IOException      if there is any error
      */
-    public void register(String email, String password) throws IOException {
+    public void register(String email, String password) throws IOException, UnauthorizedException {
         // Surprise! No different implementation here as api is not prepared but methods are
         // segregated for exercises purposes
         doLogin(email, password);
@@ -37,16 +38,19 @@ public class SessionRepository {
      * @param password          user password
      * @throws IOException
      */
-    public void login(String email, String password) throws IOException {
+    public void login(String email, String password) throws IOException, UnauthorizedException {
         doLogin(email, password);
     }
 
-    private Session doLogin(String email, String password) throws IOException {
+    private Session doLogin(String email, String password) throws IOException, UnauthorizedException {
         final LoginBody body = new LoginBody(email, password);
         final Response<Session> response = sessionApi.login(body).execute();
         if (response.isSuccessful()) {
             return response.body();
+        } else if (response.code() == UNAUTHORIZED_CODE) {
+            throw new UnauthorizedException();
         } else {
+
             throw new IOException(String.valueOf(response.code()));
         }
     }
