@@ -38,8 +38,8 @@ public class SessionRepository {
      * @param password          user password
      * @throws IOException
      */
-    public void login(String email, String password) throws IOException, UnauthorizedException {
-        doLogin(email, password);
+    public Session login(String email, String password) throws IOException, UnauthorizedException {
+        return doLogin(email, password);
     }
 
     private Session doLogin(String email, String password) throws IOException, UnauthorizedException {
@@ -50,7 +50,6 @@ public class SessionRepository {
         } else if (response.code() == UNAUTHORIZED_CODE) {
             throw new UnauthorizedException();
         } else {
-
             throw new IOException(String.valueOf(response.code()));
         }
     }
