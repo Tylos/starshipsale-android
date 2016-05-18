@@ -13,17 +13,17 @@ import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
 import com.upsa.mimo.starshipsale.view.features.login.LoginActivity;
 
-import java.io.IOException;
-
 public class Authenticator extends AbstractAccountAuthenticator {
 
     public static final String ADD_ACCOUNT_USER_NAME = "add_account.user_name";
     public static final String ADD_ACCOUNT_USER_PASSWORD = "add_account.user_password";
     private Context context;
+    private SessionRepository sessionRepository;
 
     public Authenticator(Context context) {
         super(context);
         this.context = context;
+        this.sessionRepository = new SessionRepository(context, BuildConfig.SERVER_REST_URL);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Authenticator extends AbstractAccountAuthenticator {
                 final String userName = options.getString(ADD_ACCOUNT_USER_NAME);
                 final String userPassword = options.getString(ADD_ACCOUNT_USER_PASSWORD);
 
-                new SessionRepository(context, BuildConfig.SERVER_REST_URL).register(userName, userPassword);
+                sessionRepository.register(userName, userPassword);
 
                 Account account = new Account(userName, accountType);
                 AccountManager accountManager = AccountManager.get(context);
