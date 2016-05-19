@@ -8,6 +8,7 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
@@ -21,6 +22,7 @@ public class Authenticator extends AbstractAccountAuthenticator {
 
     public static final String ADD_ACCOUNT_USER_NAME = "add_account.user_name";
     public static final String ADD_ACCOUNT_USER_PASSWORD = "add_account.user_password";
+    public static final String UPDATE_CREDENTIALS_USER_PASSWORD = "update_credentials.user_password";
     private Context context;
     private SessionRepository sessionRepository;
 
@@ -111,7 +113,34 @@ public class Authenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle updateCredentials(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
-        return null;
+        AccountManager accountManager = AccountManager.get(context);
+        final String userPassword = options.getString(UPDATE_CREDENTIALS_USER_PASSWORD);
+
+        if (TextUtils.isEmpty(userPassword)) {
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, account.name);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+            return bundle;
+        } else {
+            Bundle result = new Bundle();
+            try {
+                final Session session = sessionRepository.login(account.name, userPassword);
+                accountManager.setPassword(account, userPassword);
+                accountManager.setAuthToken(account, authTokenType, session.getToken());
+
+                result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+                result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+                return result;
+            } catch (Exception e) {
+                result.putInt(AccountManager.KEY_ERROR_CODE, AccountManager.ERROR_CODE_NETWORK_ERROR);
+                result.putString(AccountManager.KEY_ERROR_MESSAGE, "Something went wrong " + e.getMessage());
+                return result;
+            }
+        }
     }
 
     @Override
