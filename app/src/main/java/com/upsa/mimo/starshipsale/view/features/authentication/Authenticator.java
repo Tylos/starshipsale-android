@@ -11,7 +11,11 @@ import android.os.Bundle;
 
 import com.upsa.mimo.starshipsale.BuildConfig;
 import com.upsa.mimo.starshipsale.api.session.SessionRepository;
+import com.upsa.mimo.starshipsale.api.session.UnauthorizedException;
+import com.upsa.mimo.starshipsale.domain.entities.Session;
 import com.upsa.mimo.starshipsale.view.features.login.LoginActivity;
+
+import java.io.IOException;
 
 public class Authenticator extends AbstractAccountAuthenticator {
 
@@ -73,7 +77,31 @@ public class Authenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
-        return null;
+        Bundle result = new Bundle();
+        AccountManager accountManager = AccountManager.get(context);
+        final String storedPassword = accountManager.getPassword(account);
+
+        try {
+            final Session session = sessionRepository.login(account.name, storedPassword);
+            accountManager.setAuthToken(account, authTokenType, session.getToken());
+
+            result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+            result.putString(AccountManager.KEY_AUTHTOKEN, session.getToken());
+            return result;
+        } catch (IOException e) {
+            result.putInt(AccountManager.KEY_ERROR_CODE, AccountManager.ERROR_CODE_NETWORK_ERROR);
+            result.putString(AccountManager.KEY_ERROR_MESSAGE, "Something went wrong " + e.getMessage());
+            return result;
+        } catch (UnauthorizedException e) {
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, account.name);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+            return bundle;
+        }
     }
 
     @Override
