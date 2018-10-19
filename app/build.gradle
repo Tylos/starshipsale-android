@@ -8,13 +8,13 @@ def versionPatch = 1
 def versionBuild = 3
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.upsa.mimo.starshipsale"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
     }
