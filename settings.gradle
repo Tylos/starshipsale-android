@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':token_consumer_app'
